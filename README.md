@@ -1,13 +1,13 @@
-# Aplikasi Monitoring Order
+# Aplikasi Sistem Informasi Keuangan
 
-Sistem informasi Monitoring Order berbasis Web sebagai sarana pengumpulan data orderan pelanggan dan analisis informasi secara sistematis mengenai perkembangan program atau kegiatan.
+Sistem informasi Keuangan berbasis Web sebagai sarana pengumpulan, pengolahan dan pemaparan data keuangan dari SD Katolik Rekas 2.
 
 ## Clone Project from Git
 
 ```bash
 git init
-git clone https://gitlab.com/Gempong/dian-larasati-skripsi.git
-cd dian-larasati-skripsi
+git clone https://github.com/wiradrm/maria-letticia-skripsi.git
+cd maria-letticia-skripsi.git
 ```
 
 ## Installation
@@ -30,10 +30,10 @@ php artisan serve
 
 ## Default Account
 
-<b>Inputer</b> <br>
-Username : dianlarasati <br>
-Password : dian12345
+<b>Kepala Sekolah</b> <br>
+Username : gaspargarung <br>
+Password : gaspar1234
 
 <b>Staff</b> <br>
-Username : bagus <br>
-Password : bagus12345
+Username : thomasaquino <br>
+Password : thomas1234
