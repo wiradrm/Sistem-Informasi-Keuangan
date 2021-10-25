@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatusTransaksisTable extends Migration
+class CreatePemasukanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateStatusTransaksisTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_status_transaksi', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('status_transaksi', 50);
-            $table->string('keterangan', 100);
-            $table->integer('status')->default(1);
+        Schema::create('tb_pemasukan', function (Blueprint $table) {
+            $table->bigIncrements('kode_transaksi');
+            $table->integer('kode_laporan')->unique();
+            $table->string('jenis_transaksi');
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateStatusTransaksisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_status_transaksi');
+        Schema::dropIfExists('tb_pemasukan');
     }
 }
