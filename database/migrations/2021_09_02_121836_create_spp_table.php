@@ -20,6 +20,7 @@ class CreateSppTable extends Migration
             $table->string('jenis_transaksi');
             $table->string('bulan');
             $table->string('jumlah_bayar');
+            $table->integer('status')->default(1);
         });
     }
 

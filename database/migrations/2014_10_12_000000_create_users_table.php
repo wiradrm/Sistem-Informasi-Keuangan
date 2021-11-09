@@ -17,7 +17,8 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('username')->unique();
             $table->string('password');
-            $table->integer('hak_akses');
+            $table->integer('akses_id');
+            $table->integer('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

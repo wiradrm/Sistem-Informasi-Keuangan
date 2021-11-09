@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nama_user', 'username', 'email', 'phone', 'password', 'nik', 'jabatan_id'
+        'username', 'password', 'hak_akses'
     ];
 
     /**
@@ -40,9 +40,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
 
     public function scopeIsNotDeleted($query)
     {
@@ -54,9 +54,9 @@ class User extends Authenticatable
         return $query->where('status', static::STATUS_ACTIVE);
     }
 
-    public function getJabatan()
+    public function getAkses()
     {
-        return $this->belongsTo(Jabatan::class, 'jabatan_id', 'id');
+        return $this->belongsTo(Akses::class, 'jabatan_id', 'id');
     }
 
     public function getPoint()

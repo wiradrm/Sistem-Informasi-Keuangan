@@ -18,6 +18,7 @@ class CreatePemasukanTable extends Migration
             $table->integer('kode_laporan')->unique();
             $table->string('jenis_transaksi');
             $table->integer('jumlah');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

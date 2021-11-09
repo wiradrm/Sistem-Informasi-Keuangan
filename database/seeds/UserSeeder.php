@@ -15,14 +15,14 @@ class UserSeeder extends Seeder
         $user1 = new User([
             "username"      =>"gaspargarung",
             "password"  =>bcrypt('gaspar1234'),
-            "hak_akses"      =>"1"
+            "akses_id"      =>1,
         ]);
         $user1->save();
 
         $user2 = new User([
             "username"      =>"thomasaquino",
             "password"  =>bcrypt('thomas1234'),
-            "hak_akses"      =>"2"
+            "akses_id"      =>2,
         ]);
         $user2->save();
     }

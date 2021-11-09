@@ -23,6 +23,7 @@ class CreateSiswaTable extends Migration
             $table->string('alamat', 100);
             $table->string('jenis_kelamin', 20);
             $table->string('no_hp', 20);
+            $table->integer('status')->default(1);
         });
     }
 

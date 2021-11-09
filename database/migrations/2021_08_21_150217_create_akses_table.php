@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKelasTable extends Migration
+class CreateAksesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateKelasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_kelas', function (Blueprint $table) {
-            $table->bigIncrements('kelas_id');
-            $table->integer('no_kelas')->unique();
-            $table->string('kelas', 20);
-            $table->string('wali', 20);
+        Schema::create('tb_akses', function (Blueprint $table) {
+            $table->bigIncrements('akses_id');
+            $table->string('akses', 50);
             $table->integer('status')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -29,6 +28,6 @@ class CreateKelasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_kelas');
+        Schema::dropIfExists('tb_akses');
     }
 }

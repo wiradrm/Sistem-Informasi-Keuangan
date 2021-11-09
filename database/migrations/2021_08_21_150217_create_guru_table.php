@@ -23,6 +23,7 @@ class CreateGuruTable extends Migration
             $table->string('bidang_studi', 40);
             $table->string('alamat', 100);
             $table->string('no_hp', 20);
+            $table->integer('status')->default(1);
         });
     }
 

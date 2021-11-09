@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Jabatan extends Model
+class Anggaran extends Model
 {
     const STATUS_ACTIVE = 1;
     const STATUS_DELETE = 0;
 
-    protected $table = 'tb_jabatan';
+    protected $table = 'tb_anggaran';
     protected $guarded = [];
 
     public function scopeIsNotDeleted($query)

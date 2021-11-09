@@ -6,7 +6,7 @@
             <div class="card login-card">
                 <div class="card-body">
                     <!-- <h1>Login</h1> -->
-                    <img src="{{asset('assets/logo_horizontal_color.svg')}}" class="login_logo" alt="logo">
+                    <img src="{{asset('assets/sd.png')}}" class="login_logo" alt="logo">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group">
@@ -26,6 +26,9 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <p><center>Tahun Ajaran 2021/2022</center> </p>                           
                         </div>
 
                         <div class="form-group row align-items-center">

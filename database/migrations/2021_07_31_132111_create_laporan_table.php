@@ -19,6 +19,7 @@ class CreateLaporanTable extends Migration
             $table->integer('kode_transaksi');
             $table->integer('id_transaksi');
             $table->string('laporan');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

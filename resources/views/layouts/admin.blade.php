@@ -1,4 +1,4 @@
-@php($editjabatan = App\Jabatan::isNotDeleted()->get())
+@php($editakses = App\Akses::isNotDeleted()->get())
 @php($profile = App\User::isNotDeleted()->where('id', Auth::user()->id)->first())
 <!DOCTYPE html>
 <html lang="en">
@@ -108,7 +108,7 @@
                   </button>
                   <!-- Topbar Navbar -->
                   <ul class="navbar-nav ml-auto">
-                     @include('admin.notification.notification')
+                     {{-- @include('admin.notification.notification') --}}
                      <div class="topbar-divider d-none d-sm-block"></div>
                      <!-- Nav Item - User Information -->
                      <li class="nav-item dropdown no-arrow">
@@ -143,7 +143,7 @@
             <footer class="sticky-footer bg-white">
                <div class="container my-auto">
                   <div class="copyright text-center my-auto">
-                     <span>Copyright &copy; Dian Larasati 2021</span>
+                     <span>Copyright &copy; Maria Letticia 2021</span>
                   </div>
                </div>
             </footer>

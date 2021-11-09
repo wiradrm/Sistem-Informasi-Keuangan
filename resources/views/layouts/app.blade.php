@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Business Service - Telkom Denpasar</title>
+    <title>Sistem Informasi Keuangan - SD Katolik Rekas 2</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

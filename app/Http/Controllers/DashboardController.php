@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Order;
-use App\AM;
-use App\Posting;
-use App\Pelanggan;
+use App\Guru;
+use App\Kelas;
+use App\Siswa;
+use App\Spp;
+use App\Pemasukan;
+use App\Pengeluaran;
+use App\Anggaran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -33,93 +36,79 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name');
-        $orderasc = $request->get('orderasc');
-        $orderdesc = $request->get('orderdesc');
-        $models = Posting::isNotDeleted();
-        $pelanggan = Pelanggan::isNotDeleted()->get();
 
-        if ($name) {
-            $models = $models->where('nama_kegiatan', 'like', '%' . $name . '%');
-        }
-        if ($orderasc) {
-            $models = $models->orderBy($orderasc, 'asc');
-        } 
-        if ($orderdesc) {
-            $models = $models->orderBy($orderdesc, 'desc');
-        } else {
-            $models = $models->orderBy('created_at', 'desc');
-        }
+        $guru = Guru::isNotDeleted()->count();
+        $siswa = Siswa::isNotDeleted()->count();
+        $kelas = Kelas::isNotDeleted()->count();
 
-        $models = $models->paginate(20);
+        // $anggaran = Anggaran::isNotDeleted()->where('status_transaksi_id', 4)->count();
+        // $countPending = Order::isNotDeleted()->where('status_transaksi_id', 1)->count();
+        // $countProgress = Order::isNotDeleted()->where('status_transaksi_id', 2)->count();
 
-        $countSuccess = Order::isNotDeleted()->where('status_transaksi_id', 4)->count();
-        $countPending = Order::isNotDeleted()->where('status_transaksi_id', 1)->count();
-        $countProgress = Order::isNotDeleted()->where('status_transaksi_id', 2)->count();
-
-        $CountChartSuccesss = Order::select('status_transaksi_id', 'created_at')
-        ->where('status_transaksi_id', 4)
-        ->get()->groupBy(function ($date) {
-            return Carbon::parse($date->created_at)->format('m');
-        });
+        // $CountChartSuccesss = Order::select('status_transaksi_id', 'created_at')
+        // ->where('status_transaksi_id', 4)
+        // ->get()->groupBy(function ($date) {
+        //     return Carbon::parse($date->created_at)->format('m');
+        // });
 
 
-        $CountChartPending = Order::select('status_transaksi_id', 'created_at')
-        ->where('status_transaksi_id', 1)
-        ->get()->groupBy(function ($date) {
-            return Carbon::parse($date->created_at)->format('m');
-        });
+        // $CountChartPending = Order::select('status_transaksi_id', 'created_at')
+        // ->where('status_transaksi_id', 1)
+        // ->get()->groupBy(function ($date) {
+        //     return Carbon::parse($date->created_at)->format('m');
+        // });
 
-        $CountChartProgress = Order::select('status_transaksi_id', 'created_at')
-        ->where('status_transaksi_id', 2)
-        ->get()->groupBy(function ($date) {
-            return Carbon::parse($date->created_at)->format('m');
-        });
+        // $CountChartProgress = Order::select('status_transaksi_id', 'created_at')
+        // ->where('status_transaksi_id', 2)
+        // ->get()->groupBy(function ($date) {
+        //     return Carbon::parse($date->created_at)->format('m');
+        // });
 
-        $chartSuccessmcount = [];
-        $chartSuccess = [];
+        // $chartSuccessmcount = [];
+        // $chartSuccess = [];
 
-        foreach ($CountChartSuccesss as $key => $value) {
-            $chartSuccessmcount[(int)$key] = count($value);
-        }
+        // foreach ($CountChartSuccesss as $key => $value) {
+        //     $chartSuccessmcount[(int)$key] = count($value);
+        // }
 
-        for ($i = 1; $i <= 12; $i++) {
-            if (!empty($chartSuccessmcount[$i])) {
-                $chartSuccess[$i] = $chartSuccessmcount[$i];
-            } else {
-                $chartSuccess[$i] = 0;
-            }
-        }
+        // for ($i = 1; $i <= 12; $i++) {
+        //     if (!empty($chartSuccessmcount[$i])) {
+        //         $chartSuccess[$i] = $chartSuccessmcount[$i];
+        //     } else {
+        //         $chartSuccess[$i] = 0;
+        //     }
+        // }
 
-        $chartPendingmcount = [];
-        $chartPending = [];
+        // $chartPendingmcount = [];
+        // $chartPending = [];
 
-        foreach ($CountChartPending as $key => $value) {
-            $chartPendingmcount[(int)$key] = count($value);
-        }
+        // foreach ($CountChartPending as $key => $value) {
+        //     $chartPendingmcount[(int)$key] = count($value);
+        // }
 
-        for ($i = 1; $i <= 12; $i++) {
-            if (!empty($chartPendingmcount[$i])) {
-                $chartPending[$i] = $chartPendingmcount[$i];
-            } else {
-                $chartPending[$i] = 0;
-            }
-        }
+        // for ($i = 1; $i <= 12; $i++) {
+        //     if (!empty($chartPendingmcount[$i])) {
+        //         $chartPending[$i] = $chartPendingmcount[$i];
+        //     } else {
+        //         $chartPending[$i] = 0;
+        //     }
+        // }
 
-        $chartProgressmcount = [];
-        $chartProgress = [];
+        // $chartProgressmcount = [];
+        // $chartProgress = [];
 
-        foreach ($CountChartProgress as $key => $value) {
-            $chartProgressmcount[(int)$key] = count($value);
-        }
+        // foreach ($CountChartProgress as $key => $value) {
+        //     $chartProgressmcount[(int)$key] = count($value);
+        // }
 
-        for ($i = 1; $i <= 12; $i++) {
-            if (!empty($chartProgressmcount[$i])) {
-                $chartProgress[$i] = $chartProgressmcount[$i];
-            } else {
-                $chartProgress[$i] = 0;
-            }
-        }
+        // for ($i = 1; $i <= 12; $i++) {
+        //     if (!empty($chartProgressmcount[$i])) {
+        //         $chartProgress[$i] = $chartProgressmcount[$i];
+        //     } else {
+        //         $chartProgress[$i] = 0;
+        //     }
+        // }
 
-        return view($this->index, compact('models', 'pelanggan', 'countSuccess', 'countPending', 'countProgress', 'chartProgress', 'chartPending', 'chartSuccess'));
+        return view($this->index, compact('kelas', 'guru', 'siswa'));
     }
 }

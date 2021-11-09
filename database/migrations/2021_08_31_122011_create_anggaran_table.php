@@ -20,6 +20,7 @@ class CreateAnggaranTable extends Migration
             $table->string('username');
             $table->string('jenis_anggaran');
             $table->string('jumlah_bayar');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

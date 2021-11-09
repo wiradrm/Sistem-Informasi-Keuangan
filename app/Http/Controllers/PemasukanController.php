@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 
-use App\AM;
+use App\Pemasukan;
 use App\User;
 use App\Pelanggan;
 use App\Transaksi;
@@ -18,10 +18,10 @@ use App\Exports\AMExport;
 use App\Imports\AMImport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AMController extends Controller
+class PemasukanController extends Controller
 {
-    protected $page = 'admin.am.';
-    protected $index = 'admin.am.index';
+    protected $page = 'admin.pemasukan.';
+    protected $index = 'admin.pemasukan.index';
     /**
      * Display a listing of the resource.
      *
@@ -39,6 +39,7 @@ class AMController extends Controller
         } else {
             $models = AM::isNotDeleted()->where('user_id', Auth::user()->id);
         }
+        
         $pelanggan = Pelanggan::isNotDeleted()->where('user_id', Auth::user()->id)->get();
         $transaksi = Transaksi::isNotDeleted()->get();
         $produk = Produk::isNotDeleted()->get();

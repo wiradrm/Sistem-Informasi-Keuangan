@@ -25,6 +25,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'DashboardController@index')->name('home');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    
     Route::get('/order', 'OrderController@index')->name('order');
     Route::get('/produk', 'ProdukController@index')->name('produk');
     Route::get('/am', 'AMController@index')->name('am');
@@ -50,8 +51,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/karyawan/ranking', 'RankingController@index')->name('ranking');
     Route::get('/karyawan/ranking/export', 'RankingController@export')->name('ranking.export');
 
-    Route::get('/notification', 'NotificationController@index')->name('notification');
-    Route::get('/notification/read/{id}', 'NotificationController@read')->name('notification.read');
 
     Route::group(['middleware' => 'admin'], function () {
         Route::post('/produk/store', 'ProdukController@store')->name('produk.store');
