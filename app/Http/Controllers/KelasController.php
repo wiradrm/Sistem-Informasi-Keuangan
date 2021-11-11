@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Produk;
+use DB;
+use App\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Exports\ProdukExport;
+use App\Exports\KelasExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ProdukController extends Controller
+class KelasController extends Controller
 {
-    protected $page = 'admin.produk.';
-    protected $index = 'admin.produk.index';
+    protected $page = 'admin.kelas.';
+    protected $index = 'admin.kelas.index';
     protected $validator;
 
     protected function validationData($request){
         $this->validator      = Validator::make(
             $request,
             [
-                'nama_produk'          => 'required',
+                'kelas'          => 'required',
             ],
             [
                 'required'          => ':attribute is required.'
             ],
             [
-                'nama_produk'           => 'Nama Produk',
+                'kelas'           => 'Nama Kelas',
             ]
         );
     }
@@ -37,22 +38,11 @@ class ProdukController extends Controller
      */
     public function index(Request $request)
     {
-        $name = $request->get('name');
+        $kelas = $request->get('kelas');
         $orderasc = $request->get('orderasc');
         $orderdesc = $request->get('orderdesc');
-        $models = Produk::isNotDeleted();
+        $models = Kelas::isNotDeleted();
 
-        if ($name) {
-            $models = $models->where('nama_produk', 'like', '%' . $name . '%');
-        }
-        if ($orderasc) {
-            $models = $models->orderBy($orderasc, 'asc');
-        } 
-        if ($orderdesc) {
-            $models = $models->orderBy($orderdesc, 'desc');
-        } else {
-            $models = $models->orderBy('created_at', 'desc');
-        }
 
         $models = $models->paginate(20);
         return view($this->index, compact('models'));
@@ -81,20 +71,21 @@ class ProdukController extends Controller
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
-        $model = new Produk();
-        $model->nama_produk = $request->nama_produk;
-        $model->deskripsi = $request->deskripsi;
+        $model = new Kelas();
+        $model->no_kelas = $request->no_kelas;
+        $model->kelas = $request->kelas;
+        $model->wali = $request->wali;
         $model->save();
-        return redirect()->route('produk')->with('info', 'Berhasil menambah data');
+        return redirect()->route('kelas')->with('info', 'Berhasil menambah data');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Produk  $produk
+     * @param  \App\Kelas  $Kelas
      * @return \Illuminate\Http\Response
      */
-    public function show(Produk $produk)
+    public function show(Kelas $Kelas)
     {
         //
     }
@@ -102,10 +93,10 @@ class ProdukController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Produk  $produk
+     * @param  \App\Kelas  $Kelas
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produk $produk)
+    public function edit(Kelas $Kelas)
     {
         //
     }
@@ -114,39 +105,39 @@ class ProdukController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Produk  $produk
+     * @param  \App\Kelas  $Kelas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kelas_id)
     {
         // $this->validationData($request->all());
         // if ($this->validator->fails()) {
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
-        $model = Produk::findOrFail($id);
-        $model->nama_produk = $request->nama_produk;
-        $model->deskripsi = $request->deskripsi;
+        $model = Kelas::findOrFail($kelas_id);
+        $model->no_kelas = $request->no_kelas;
+        $model->kelas = $request->kelas;
+        $model->wali = $request->wali;
         $model->save();
-        return redirect()->route('produk')->with('info', 'Berhasil mengubah data');
+        return redirect()->route('kelas')->with('info', 'Berhasil mengubah data');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Produk  $produk
+     * @param  \App\Kelas  $Kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kelas_id)
     {
-      $model = Produk::findOrFail($id);
-      $model->status = Produk::STATUS_DELETE;
-      $model->save();
+      $model = Kelas::findOrFail($kelas_id);
+      DB::table('tb_kelas')->where('kelas_id',$kelas_id)->delete();
 
-      return redirect()->route('produk')->with('info', 'Berhasil menghapus data');
+      return redirect()->route('kelas')->with('info', 'Berhasil menghapus data');
     }
 
     public function export(){
-        return Excel::download(new ProdukExport, 'report_produk_'.date('d_m_Y_H_i_s').'.xlsx');
+        return Excel::download(new KelasExport, 'report_Kelas_'.date('d_m_Y_H_i_s').'.xlsx');
     }
 }

@@ -12,7 +12,7 @@ class Siswa extends Model
 
     protected $table = 'tb_siswa';
     protected $guarded = [];
-    protected $primaryKey = 'nis';
+    protected $primaryKey = 'siswa_id';
 
     public function scopeIsNotDeleted($query)
     {
@@ -24,8 +24,5 @@ class Siswa extends Model
         return $query->where('status', static::STATUS_ACTIVE);
     }
 
-    // public function getAM()
-    // {
-    //     return $this->belongsTo(User::class, 'user_id', 'id');
-    // }
+    
 }

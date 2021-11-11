@@ -12,7 +12,7 @@ class Kelas extends Model
 
     protected $table = 'tb_kelas';
     protected $guarded = [];
-    protected $primaryKey = 'no_kelas';
+    protected $primaryKey = 'kelas_id';
 
     public function scopeIsNotDeleted($query)
     {
@@ -24,8 +24,4 @@ class Kelas extends Model
         return $query->where('status', static::STATUS_ACTIVE);
     }
 
-    // public function getAM()
-    // {
-    //     return $this->belongsTo(User::class, 'user_id', 'id');
-    // }
 }

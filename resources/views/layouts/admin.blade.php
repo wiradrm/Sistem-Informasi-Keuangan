@@ -8,7 +8,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
       <meta name="author" content="">
-      <title>@yield('title') - Business Service Telkom Denpasar</title>
+      <title>@yield('title') - Sistem Informasi Keuangan</title>
       <!-- Custom fonts for this template-->
       <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
       <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -25,7 +25,7 @@
          <ul class="navbar-nav bg-red sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard')}}">
-               <img src="{{asset('assets/logo_horizontal.svg')}}" class="d-xs-none img-fluid" alt="Logo">
+               <img src="{{asset('assets/logo-sd.png')}}" class="d-xs-none img-fluid" alt="Logo">
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -33,66 +33,85 @@
             <li class="nav-item {{ Request::routeIs('dashboard') ? 'active' : '' }}">
                <a class="nav-link" href="{{route('dashboard')}}">
                <i class='bx bxs-bar-chart-alt-2'></i>
-               <span>Home</span></a>
+               <span>Dashboard</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-            @if(Auth::user()->jabatan_id != 9)
-            <li class="nav-item {{ Request::routeIs('produk') ? 'active' : '' }}">
-               <a class="nav-link" href="{{route('produk')}}">
-               <i class='bx bxs-dashboard' ></i>
-               <span>Produk</span></a>
-            </li>
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item {{ Request::routeIs('pelanggan', 'karyawan') ? 'active' : '' }}">
+            @if(Auth::user()->akses_id == 2)
+            <li class="nav-item {{ Request::routeIs('guru', 'siswa', 'kelas') ? 'active' : '' }}">
                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                <i class='bx bxs-receipt' ></i>
-               <span>Data Mapping</span>
+               <span>Data Master</span>
                </a>
                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
-                     <h6 class="collapse-header">Data Mapping:</h6>
-                     <a class="collapse-item" href="{{route('pelanggan')}}">BA SID Pelanggan</a>
-                     <a class="collapse-item" href="{{route('karyawan')}}">Data Karyawan</a>
+                     <h6 class="collapse-header">Data Master:</h6>
+                     <a class="collapse-item" href="{{route('guru')}}">Data Guru</a>
+                     <a class="collapse-item" href="{{route('siswa')}}">Data Siswa</a>
+                     <a class="collapse-item" href="{{route('kelas')}}">Data Kelas</a>
+                  </div>
+               </div>
+            </li>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item {{ Request::routeIs('spp', 'kas_masuk') ? 'active' : '' }}">
+               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities_2" aria-expanded="true" aria-controls="collapseUtilities">
+               <i class='bx bxs-arrow-to-bottom' ></i>
+               <span>Kas Masuk</span>
+               </a>
+               <div id="collapseUtilities_2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                  <div class="bg-white py-2 collapse-inner rounded">
+                     <h6 class="collapse-header">Kas Masuk:</h6>
+                     <a class="collapse-item" href="{{route('spp')}}">SPP</a>
+                     <a class="collapse-item" href="{{route('pemasukan')}}">Kas Masuk Lainnya</a>
+                  </div>
+               </div>
+            </li>
+            <li class="nav-item {{ Request::routeIs('pengeluaran') ? 'active' : '' }}">
+               <a class="nav-link" href="{{route('pengeluaran')}}">
+               <i class='bx bxs-arrow-to-top' ></i>
+               <span>Pengeluaran</span></a>
+            </li>
+            <li class="nav-item {{ Request::routeIs('anggaran') ? 'active' : '' }}">
+               <a class="nav-link" href="{{route('anggaran')}}">
+               <i class='bx bxs-wallet' ></i>
+               <span>Anggaran</span></a>
+            </li>
+            <li class="nav-item {{ Request::routeIs('jurnal', 'modal') ? 'active' : '' }}">
+               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities_3" aria-expanded="true" aria-controls="collapseUtilities">
+               <i class='bx bxs-report' ></i>
+               <span>Laporan</span>
+               </a>
+               <div id="collapseUtilities_3" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                  <div class="bg-white py-2 collapse-inner rounded">
+                     <h6 class="collapse-header">Laporan:</h6>
+                     <a class="collapse-item" href="{{route('jurnal')}}">Jurnal Umum</a>
+                     <a class="collapse-item" href="{{route('modal')}}">Perubahan Modal</a>
                   </div>
                </div>
             </li>
             <!-- Nav Item - Charts -->
             @endif
-            <li class="nav-item {{ Request::routeIs('order') ? 'active' : '' }}">
-               <a class="nav-link" href="{{route('order')}}">
-               <i class='bx bxs-file-blank' ></i>
-               <span>Monitor Order</span></a>
+            
+            @if(Auth::user()->akses_id == 1)
+            <li class="nav-item {{ Request::routeIs('transaksi') ? 'active' : '' }}">
+               <a class="nav-link" href="{{route('transaksi')}}">
+               <i class='bx bxs-data' ></i>
+               <span>Data Transaksi</span></a>
             </li>
-            <li class="nav-item {{ Request::routeIs('am') ? 'active' : '' }}">
-               <a class="nav-link" href="{{route('am')}}">
-               <i class='bx bxs-receipt' ></i>
-               <span>Prospek AM</span></a>
+            <li class="nav-item {{ Request::routeIs('jurnal', 'modal') ? 'active' : '' }}">
+               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities_3" aria-expanded="true" aria-controls="collapseUtilities">
+               <i class='bx bxs-report' ></i>
+               <span>Laporan</span>
+               </a>
+               <div id="collapseUtilities_3" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                  <div class="bg-white py-2 collapse-inner rounded">
+                     <h6 class="collapse-header">Laporan:</h6>
+                     <a class="collapse-item" href="{{route('jurnal')}}">Jurnal Umum</a>
+                     <a class="collapse-item" href="{{route('modal')}}">Perubahan Modal</a>
+                  </div>
+               </div>
             </li>
-            @if(Auth::user()->jabatan_id != 9 && Auth::user()->jabatan_id != 1)
-            <li class="nav-item {{ Request::routeIs('request') ? 'active' : '' }}">
-               <a class="nav-link" href="{{route('request')}}">
-               <i class='bx bxs-receipt' ></i>
-               <span>Request Order</span></a>
-            </li>
-            <li class="nav-item {{ Request::routeIs('posting') ? 'active' : '' }}">
-               <a class="nav-link" href="{{route('posting')}}">
-               <i class='bx bxs-file' ></i>
-               <span>Posting Kegiatan</span></a>
-            </li> 
             @endif
-            @if(Auth::user()->jabatan_id == 9)
-            <li class="nav-item {{ Request::routeIs('ranking') ? 'active' : '' }}">
-               <a class="nav-link" href="{{route('ranking')}}">
-               <i class='bx bx-trophy'></i>
-               <span>Karyawan Aktif</span></a>
-            </li> 
-            @endif
-            <li class="nav-item {{ Request::routeIs('koordinat') ? 'active' : '' }}">
-               <a class="nav-link" href="{{route('koordinat')}}">
-               <i class='bx bxs-map' ></i>
-               <span>Koordinat</span></a>
-            </li>
             <!-- Sidebar Toggler (Sidebar) -->
          </ul>
          <!-- End of Sidebar -->
@@ -113,8 +132,8 @@
                      <!-- Nav Item - User Information -->
                      <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama_user }}</span>
-                        <img class="img-profile rounded-circle" src="https://ui-avatars.com/api/?background=eb4d4b&color=ffffff&name={{ Auth::user()->nama_user }}">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->username }}</span>
+                        <img class="img-profile rounded-circle" src="https://ui-avatars.com/api/?background=1597E5&color=ffffff&name={{ Auth::user()->nama_user }}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -194,26 +213,26 @@
                @csrf
                @method('PUT')
                <div class="modal-body">
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                      <label for="nik" class="col-form-label">NIK</label>
                      <input type="text" class="form-control" id="nik" name="nik" value="{{ $profile->nik }}">
-                  </div>
-                  <div class="form-group">
+                  </div> --}}
+                  {{-- <div class="form-group">
                      <label for="nama" class="col-form-label">Nama</label>
                      <input type="text" class="form-control" id="nama" name="nama_user" value="{{ $profile->nama_user }}">
-                  </div>
+                  </div> --}}
                   <div class="form-group">
                      <label for="username" class="col-form-label">Username</label>
                      <input type="text" class="form-control" id="username" name="username" value="{{ $profile->username }}">
                   </div>
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                      <label for="username" class="col-form-label">Email</label>
                      <input type="email" class="form-control" id="nama" name="email" value="{{ $profile->email }}">
                   </div>
                   <div class="form-group">
                      <label for="phone" class="col-form-label">Phone</label>
                      <input type="text" class="form-control" id="phone" name="phone" value="{{ $profile->phone }}">
-                  </div>
+                  </div> --}}
                   <div class="form-group">
                      <label for="password" class="col-form-label">New Password</label>
                      <input type="password" class="form-control" id="password" name="password" autocomplete="false">

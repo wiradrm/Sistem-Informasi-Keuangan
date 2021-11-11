@@ -21,6 +21,7 @@ class CreateSppTable extends Migration
             $table->string('bulan');
             $table->string('jumlah_bayar');
             $table->integer('status')->default(1);
+            $table->timestamps();
         });
     }
 

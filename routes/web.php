@@ -26,61 +26,48 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'DashboardController@index')->name('home');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     
-    Route::get('/order', 'OrderController@index')->name('order');
-    Route::get('/produk', 'ProdukController@index')->name('produk');
-    Route::get('/am', 'AMController@index')->name('am');
-    Route::get('/koordinat', 'PelangganController@koordinat')->name('koordinat');
-    Route::get('/laporan', 'LaporanController@index')->name('laporan');
-    Route::get('/karyawan', 'KaryawanController@index')->name('karyawan');
-    Route::get('/pelanggan', 'PelangganController@index')->name('pelanggan');
-    Route::get('/posting', 'PostingController@index')->name('posting');
-    Route::post('/posting/store', 'PostingController@store')->name('posting.store');
-    Route::put('/posting/update/{id}', 'PostingController@update')->name('posting.update');
-    Route::put('/posting/delete/{id}', 'PostingController@destroy')->name('posting.delete');
-    Route::get('/posting/export', 'PostingController@export')->name('posting.export');
-    Route::post('/am/store', 'AMController@store')->name('am.store');
-    Route::put('/am/update/{id}', 'AMController@update')->name('am.update');
-    Route::put('/am/delete/{id}', 'AMController@destroy')->name('am.delete');
-    Route::get('/am/export', 'AMController@export')->name('am.export');
-    Route::post('/am/import', 'AMController@import')->name('am.import');
+    Route::get('/guru', 'GuruController@index')->name('guru');
 
-    Route::get('/request', 'RequestController@index')->name('request');
-    Route::post('/request/store', 'RequestController@store')->name('request.store');
-    Route::get('/request/export', 'RequestController@export')->name('request.export');
+    Route::get('/siswa', 'SiswaController@index')->name('siswa');
+    
+    Route::get('/kelas', 'KelasController@index')->name('kelas');
+    
+    Route::get('/spp', 'SppController@koordinat')->name('spp');
+    
+    Route::get('/pemasukan', 'PemasukanController@index')->name('pemasukan');
 
-    Route::get('/karyawan/ranking', 'RankingController@index')->name('ranking');
-    Route::get('/karyawan/ranking/export', 'RankingController@export')->name('ranking.export');
+    Route::get('/pengeluaran', 'PengeluaranController@index')->name('pengeluaran');
+
+    Route::get('/anggaran', 'AnggaranController@index')->name('anggaran');
+
+    Route::get('/jurnal', 'JurnalController@index')->name('jurnal');
+
+    Route::get('/modal', 'JurnalController@index')->name('modal');
+
+    Route::get('/transaksi', 'TransaksiController@index')->name('transaksi');
 
 
     Route::group(['middleware' => 'admin'], function () {
-        Route::post('/produk/store', 'ProdukController@store')->name('produk.store');
-        Route::put('/produk/update/{id}', 'ProdukController@update')->name('produk.update');
-        Route::put('/produk/delete/{id}', 'ProdukController@destroy')->name('produk.delete');
-        Route::get('/produk/export', 'ProdukController@export')->name('produk.export');
-        Route::post('/produk/import', 'ProdukController@import')->name('produk.import');
-        Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
 
-        Route::post('/karyawan/store', 'KaryawanController@store')->name('karyawan.store');
-        Route::put('/karyawan/update/{id}', 'KaryawanController@update')->name('karyawan.update');
-        Route::put('/karyawan/delete/{id}', 'KaryawanController@destroy')->name('karyawan.delete');
-        Route::get('/karyawan/export', 'KaryawanController@export')->name('karyawan.export');
-        Route::post('/karyawan/import', 'KaryawanController@import')->name('karyawan.import');
+        Route::post('/kelas/store', 'KelasController@store')->name('kelas.store');
+        Route::put('/kelas/update/{kelas_id}', 'KelasController@update')->name('kelas.update');
+        Route::put('/kelas/delete/{kelas_id}', 'KelasController@destroy')->name('kelas.delete');
 
-        Route::put('/profile/update/{id}', 'KaryawanController@profile')->name('profile.update');
+        Route::post('/guru/store', 'GuruController@store')->name('guru.store');
+        Route::put('/guru/update/{guru_id}', 'GuruController@update')->name('guru.update');
+        Route::put('/guru/delete/{guru_id}', 'GuruController@destroy')->name('guru.delete');
+        Route::get('/guru/export', 'GuruController@export')->name('guru.export');
+        Route::post('/guru/import', 'GuruController@import')->name('guru.import');
 
-        Route::post('/pelanggan/store', 'PelangganController@store')->name('pelanggan.store');
-        Route::put('/pelanggan/update/{nipnas}', 'PelangganController@update')->name('pelanggan.update');
-        Route::put('/pelanggan/delete/{nipnas}', 'PelangganController@destroy')->name('pelanggan.delete');
-        Route::get('/pelanggan/export', 'PelangganController@export')->name('pelanggan.export');
-        Route::post('/pelanggan/import', 'PelangganController@import')->name('pelanggan.import');
+        Route::post('/siswa/store', 'SiswaController@store')->name('siswa.store');
+        Route::put('/siswa/update/{siswa_id}', 'SiswaController@update')->name('siswa.update');
+        Route::put('/siswa/delete/{siswa_id}', 'SiswaController@destroy')->name('siswa.delete');
+        Route::get('/siswa/export', 'SiswaController@export')->name('siswa.export');
+        Route::post('/siswa/import', 'SiswaController@import')->name('siswa.import');
 
-        Route::post('/order/store', 'OrderController@store')->name('order.store');
-        Route::put('/order/update/{order_id}', 'OrderController@update')->name('order.update');
-        Route::put('/order/delete/{order_id}', 'OrderController@destroy')->name('order.delete');
-        Route::get('/order/export', 'OrderController@export')->name('order.export');
-        Route::post('/order/import', 'OrderController@import')->name('order.import');
+        Route::put('/profile/update/{id}', 'DashboardController@profile')->name('profile.update');
 
-        Route::get('/notification/terima/{id}/{user_id}', 'NotificationController@approve')->name('notification.approve');
-        Route::get('/notification/tolak/{id}/{user_id}', 'NotificationController@cancel')->name('notification.cancel');
     });
+
+    
 });

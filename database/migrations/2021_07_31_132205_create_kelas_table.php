@@ -17,8 +17,9 @@ class CreateKelasTable extends Migration
             $table->bigIncrements('kelas_id');
             $table->integer('no_kelas')->unique();
             $table->string('kelas', 20);
-            $table->string('wali', 20);
+            $table->string('wali', 50);
             $table->integer('status')->default(1);
+            $table->timestamps();
         });
     }
 

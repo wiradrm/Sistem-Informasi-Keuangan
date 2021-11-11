@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Exports\GuruExport;
+use App\Imports\GuruImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GuruController extends Controller
@@ -38,20 +39,10 @@ class GuruController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name');
-        $orderasc = $request->get('orderasc');
-        $orderdesc = $request->get('orderdesc');
         $models = guru::isNotDeleted();
 
         if ($name) {
             $models = $models->where('nama_guru', 'like', '%' . $name . '%');
-        }
-        if ($orderasc) {
-            $models = $models->orderBy($orderasc, 'asc');
-        } 
-        if ($orderdesc) {
-            $models = $models->orderBy($orderdesc, 'desc');
-        } else {
-            $models = $models->orderBy('created_at', 'desc');
         }
 
         $models = $models->paginate(20);
@@ -81,9 +72,12 @@ class GuruController extends Controller
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
-        $model = new guru();
+        $model = new Guru();
+        $model->nip = $request->nip;
         $model->nama_guru = $request->nama_guru;
-        $model->deskripsi = $request->deskripsi;
+        $model->jenis_kelamin = $request->jenis_kelamin;
+        $model->mapel = $request->mapel;
+
         $model->save();
         return redirect()->route('guru')->with('info', 'Berhasil menambah data');
     }
@@ -117,16 +111,18 @@ class GuruController extends Controller
      * @param  \App\guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $guru_id)
     {
         // $this->validationData($request->all());
         // if ($this->validator->fails()) {
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
-        $model = guru::findOrFail($id);
+        $model = Guru::findOrFail($guru_id);
+        $model->nip = $request->nip;
         $model->nama_guru = $request->nama_guru;
-        $model->deskripsi = $request->deskripsi;
+        $model->jenis_kelamin = $request->jenis_kelamin;
+        $model->mapel = $request->mapel;
         $model->save();
         return redirect()->route('guru')->with('info', 'Berhasil mengubah data');
     }
@@ -137,16 +133,18 @@ class GuruController extends Controller
      * @param  \App\guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($guru_id)
     {
-      $model = guru::findOrFail($id);
-      $model->status = guru::STATUS_DELETE;
-      $model->save();
-
-      return redirect()->route('guru')->with('info', 'Berhasil menghapus data');
+        $model = Guru::findOrFail($guru_id);
+        DB::table('tb_guru')->where('guru_id',$guru_id)->delete();
+  
+        return redirect()->route('guru')->with('info', 'Berhasil menghapus data');
     }
 
-    public function export(){
-        return Excel::download(new guruExport, 'report_guru_'.date('d_m_Y_H_i_s').'.xlsx');
+    public function import(Request $request) 
+    {
+        Excel::import(new GuruImport, $request->file('file')->store('temp'));
+        return back()->with('info', 'Berhasil Menambah data');
     }
+
 }

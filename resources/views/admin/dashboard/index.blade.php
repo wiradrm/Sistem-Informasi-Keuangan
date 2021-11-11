@@ -9,39 +9,21 @@ Dashboard
 </div> -->
 
 <!-- Content Row -->
+<p>Keuangan</p>
 <div class="row">
-
+    
     <div class="col-xl-4 col-md-4 mb-4">
-        <a style="text-decoration: none !important;" href="/order?status_transaksi=1">
-        <div class="card border-left-danger shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                        Transaksi Belum di Input</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kelas}}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-file fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </a>
-    </div>
-
-    <div class="col-xl-4 col-md-4 mb-4">
-        <a style="text-decoration: none !important;" href="/order?status_transaksi=2">
+        <a style="text-decoration: none !important;" href="/anggaran">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                        Transaksi Sedang Diproses</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$siswa}}</div>
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                        Saldo Awal</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-file fa-2x text-gray-300"></i>
+                        <i class="fas fa-info-circle fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -50,14 +32,51 @@ Dashboard
     </div>
 
     <div class="col-xl-4 col-md-4 mb-4">
-        <a style="text-decoration: none !important;" href="/order?status_transaksi=4">
-        <div class="card border-left-success shadow h-100 py-2">
+        <a style="text-decoration: none !important;" href="/pemasukan">
+        <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Transaksi Berhasil</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$guru}}</div>
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                        Kas Masuk</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-arrow-down fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <div class="col-xl-4 col-md-4 mb-4">
+        <a style="text-decoration: none !important;" href="/pengeluaran">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                            Kas Keluar</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-arrow-up fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col-xl-4 col-md-4 mb-4">
+        <a style="text-decoration: none !important;" href="/laporan">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                            Saldo Akhir</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-file fa-2x text-gray-300"></i>
@@ -68,155 +87,97 @@ Dashboard
         </a>
     </div>
 </div>
+<p>Data Sekolah</p>
+<div class="row">
+    
+    <div class="col-xl-4 col-md-4 mb-4">
+        <a style="text-decoration: none !important;" href="/guru">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                        Data Guru</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$guru}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <div class="col-xl-4 col-md-4 mb-4">
+        <a style="text-decoration: none !important;" href="/siswa">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                        Data Siswa</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$siswa}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+    
+    <div class="col-xl-4 col-md-4 mb-4">
+        <a style="text-decoration: none !important;" href="/kelas">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">
+                            Data Kelas</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kelas}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-building fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+</div>
+<p>Foto Sekolah</p>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img class="d-block w-100" height="550px" src="{{asset('assets/papan.jpg')}}"  alt="First slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" height="550px" src="{{asset('assets/halaman.jpg')}}"  alt="Second slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" height="550px" src="{{asset('assets/kelas.jpg')}}"  alt="Third slide">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
 <!-- Content Row --> 
 @endsection
 @section('script')
 <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-@if(Auth::user()->jabatan_id == 1)
-<script>
-    // Area Chart Example
-    var ctx = document.getElementById("myAreaChart");
-    var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [
-        {
-            label: "Belum Diinput",
-            lineTension: 0.3,
-            backgroundColor: "rgba(78, 115, 223, 0.05)",
-            borderColor: "rgba(235, 77, 75, 1)",
-            pointRadius: 3,
-            pointBackgroundColor: "rgba(235, 77, 75, 1)",
-            pointBorderColor: "rgba(235, 77, 75, 1)",
-            pointHoverRadius: 3,
-            pointHoverBackgroundColor: "rgba(235, 77, 75, 1)",
-            pointHoverBorderColor: "rgba(235, 77, 75, 1)",
-            pointHitRadius: 10,
-            pointBorderWidth: 2,
-            data: [<?php foreach($chartPending as $key => $item) echo $item.",";?>],
-        },
-        {
-            label: "Sedang Diproses",
-            lineTension: 0.3,
-            backgroundColor: "rgba(78, 115, 223, 0.05)",
-            borderColor: "rgba(246, 194, 62, 1)",
-            pointRadius: 3,
-            pointBackgroundColor: "rgba(246, 194, 62, 1)",
-            pointBorderColor: "rgba(246, 194, 62, 1)",
-            pointHoverRadius: 3,
-            pointHoverBackgroundColor: "rgba(246, 194, 62, 1)",
-            pointHoverBorderColor: "rgba(246, 194, 62, 1)",
-            pointHitRadius: 10,
-            pointBorderWidth: 2,
-            data: [<?php foreach($chartProgress as $key => $item) echo $item.",";?>],
-        },
-        {
-            label: "Berhasil",
-            lineTension: 0.3,
-            backgroundColor: "rgba(78, 115, 223, 0.05)",
-            borderColor: "rgba(28, 200, 138, 1)",
-            pointRadius: 3,
-            pointBackgroundColor: "rgba(28, 200, 138, 1)",
-            pointBorderColor: "rgba(28, 200, 138, 1)",
-            pointHoverRadius: 3,
-            pointHoverBackgroundColor: "rgba(28, 200, 138, 1)",
-            pointHoverBorderColor: "rgba(28, 200, 138, 1)",
-            pointHitRadius: 10,
-            pointBorderWidth: 2,
-            data: [
-                <?php foreach($chartSuccess as $key => $item) echo $item.",";?>
-            ],
-        },
-    ],
-    },
-    options: {
-        maintainAspectRatio: false,
-        layout: {
-        padding: {
-            left: 10,
-            right: 25,
-            top: 25,
-            bottom: 0
-        }
-        },
-        scales: {
-        xAxes: [{
-            time: {
-            unit: 'date'
-            },
-            gridLines: {
-            display: false,
-            drawBorder: false
-            },
-            ticks: {
-            maxTicksLimit: 7
-            }
-        }],
-        yAxes: [{
-            ticks: {
-            maxTicksLimit: 5,
-            padding: 10,
-            // Include a dollar sign in the ticks
-            callback: function(value, index, values) {
-                return '$' + number_format(value);
-            }
-            },
-            gridLines: {
-            color: "rgb(234, 236, 244)",
-            zeroLineColor: "rgb(234, 236, 244)",
-            drawBorder: false,
-            borderDash: [2],
-            zeroLineBorderDash: [2]
-            }
-        }],
-        },
-        legend: {
-        display: false
-        },
-        tooltips: {
-        backgroundColor: "rgb(255,255,255)",
-        bodyFontColor: "#858796",
-        titleMarginBottom: 10,
-        titleFontColor: '#6e707e',
-        titleFontSize: 14,
-        borderColor: '#dddfeb',
-        borderWidth: 1,
-        xPadding: 15,
-        yPadding: 15,
-        displayColors: false,
-        intersect: false,
-        mode: 'index',
-        caretPadding: 10,
-        callbacks: {
-            label: function(tooltipItem, chart) {
-            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-            }
-        }
-        }
-    }
-    });
 
-    $(".deskripsi-text").each(function () {
-        let id = $(this).attr('id');
-        CKEDITOR.replace(id, {
-            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form'
-        });
-    });
-</script>
-@else
-<script>
-
-    $(".deskripsi-text").each(function () {
-        let id = $(this).attr('id');
-        CKEDITOR.replace(id, {
-            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form'
-        });
-    });
-</script>
-@endif
 @endsection

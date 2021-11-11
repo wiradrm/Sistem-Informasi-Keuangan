@@ -5,7 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Karyawan;
+use App\User;
+use App\Akses;
 
 class User extends Authenticatable
 {
@@ -56,11 +57,6 @@ class User extends Authenticatable
 
     public function getAkses()
     {
-        return $this->belongsTo(Akses::class, 'jabatan_id', 'id');
-    }
-
-    public function getPoint()
-    {
-        return $this->belongsTo(AM::class, 'id', 'user_id');
+        return $this->belongsTo(Akses::class, 'akses_id', 'id');
     }
 }

@@ -2,31 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use App\Siswa;
+use App\Pemasukan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Imports\SiswaImport;
+use App\Exports\GuruExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class SiswaController extends Controller
+class GuruController extends Controller
 {
-    protected $page = 'admin.siswa.';
-    protected $index = 'admin.siswa.index';
+    protected $page = 'admin.transaksi.';
+    protected $index = 'admin.transaksi.index';
     protected $validator;
 
     protected function validationData($request){
         $this->validator      = Validator::make(
             $request,
             [
-                'nama_siswa'          => 'required',
+                'nama_guru'          => 'required',
             ],
             [
                 'required'          => ':attribute is required.'
             ],
             [
-                'nama_siswa'           => 'Nama Siswa',
+                'nama_guru'           => 'Nama guru',
             ]
         );
     }
@@ -39,10 +38,20 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name');
-        $models = Siswa::isNotDeleted();
+        $orderasc = $request->get('orderasc');
+        $orderdesc = $request->get('orderdesc');
+        $models = guru::isNotDeleted();
 
         if ($name) {
-            $models = $models->where('nama_siswa', 'like', '%' . $name . '%');
+            $models = $models->where('nama_guru', 'like', '%' . $name . '%');
+        }
+        if ($orderasc) {
+            $models = $models->orderBy($orderasc, 'asc');
+        } 
+        if ($orderdesc) {
+            $models = $models->orderBy($orderdesc, 'desc');
+        } else {
+            $models = $models->orderBy('created_at', 'desc');
         }
 
         $models = $models->paginate(20);
@@ -72,25 +81,20 @@ class SiswaController extends Controller
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
-        $model = new Siswa();
-        $model->nisn = $request->nisn;
-        $model->nama_siswa = $request->nama_siswa;
-        $model->tempat = $request->tempat;
-        $model->tanggal = $request->tanggal;
-        $model->alamat = $request->alamat;
-        $model->jenis_kelamin = $request->jenis_kelamin;
-
+        $model = new guru();
+        $model->nama_guru = $request->nama_guru;
+        $model->deskripsi = $request->deskripsi;
         $model->save();
-        return redirect()->route('siswa')->with('info', 'Berhasil menambah data');
+        return redirect()->route('guru')->with('info', 'Berhasil menambah data');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Siswa  $Siswa
+     * @param  \App\guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function show(Siswa $Siswa)
+    public function show(guru $guru)
     {
         //
     }
@@ -98,10 +102,10 @@ class SiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Siswa  $Siswa
+     * @param  \App\guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function edit(Siswa $Siswa)
+    public function edit(guru $guru)
     {
         //
     }
@@ -110,45 +114,39 @@ class SiswaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Siswa  $Siswa
+     * @param  \App\guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $siswa_id)
+    public function update(Request $request, $id)
     {
         // $this->validationData($request->all());
         // if ($this->validator->fails()) {
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
-        $model = Siswa::findOrFail($siswa_id);
-        $model->nisn = $request->nisn;
-        $model->nama_siswa = $request->nama_siswa;
-        $model->tempat = $request->tempat;
-        $model->tanggal = $request->tanggal;
-        $model->alamat = $request->alamat;
-        $model->jenis_kelamin = $request->jenis_kelamin;
+        $model = guru::findOrFail($id);
+        $model->nama_guru = $request->nama_guru;
+        $model->deskripsi = $request->deskripsi;
         $model->save();
-        return redirect()->route('siswa')->with('info', 'Berhasil mengubah data');
+        return redirect()->route('guru')->with('info', 'Berhasil mengubah data');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Siswa  $Siswa
+     * @param  \App\guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function destroy($siswa_id)
+    public function destroy($id)
     {
-        $model = Siswa::findOrFail($siswa_id);
-        DB::table('tb_siswa')->where('siswa_id',$siswa_id)->delete();
-  
-        return redirect()->route('siswa')->with('info', 'Berhasil menghapus data');
+      $model = guru::findOrFail($id);
+      $model->status = guru::STATUS_DELETE;
+      $model->save();
+
+      return redirect()->route('guru')->with('info', 'Berhasil menghapus data');
     }
 
-    public function import(Request $request) 
-    {
-        Excel::import(new SiswaImport, $request->file('file')->store('temp'));
-        return back()->with('info', 'Berhasil Menambah data');
+    public function export(){
+        return Excel::download(new guruExport, 'report_guru_'.date('d_m_Y_H_i_s').'.xlsx');
     }
-
 }

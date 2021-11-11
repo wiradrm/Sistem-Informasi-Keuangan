@@ -16,7 +16,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->jabatan_id != 1){
+        if(Auth::user()->akses_id != 2){
             return redirect()->route('dashboard');
         }
         return $next($request);

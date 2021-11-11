@@ -15,15 +15,14 @@ class CreateSiswaTable extends Migration
     {
         Schema::create('tb_siswa', function (Blueprint $table) {
             $table->bigIncrements('siswa_id');
-            $table->integer('nis')->unique();
-            $table->integer('kode_spp');
-            $table->integer('no_kelas');
+            $table->bigInteger('nisn')->unique();
             $table->string('nama_siswa', 100);
-            $table->date('ttl');
+            $table->string('tempat', 100);
+            $table->date('tanggal');
             $table->string('alamat', 100);
             $table->string('jenis_kelamin', 20);
-            $table->string('no_hp', 20);
             $table->integer('status')->default(1);
+            $table->timestamps();
         });
     }
 

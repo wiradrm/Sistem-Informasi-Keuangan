@@ -15,15 +15,12 @@ class CreateGuruTable extends Migration
     {
         Schema::create('tb_guru', function (Blueprint $table) {
             $table->bigIncrements('guru_id');
-            $table->integer('nip')->unique();
-            $table->integer('no_kelas');
+            $table->string('nip');
             $table->string('nama_guru');
-            $table->date('ttl');
             $table->string('jenis_kelamin', 20);
-            $table->string('bidang_studi', 40);
-            $table->string('alamat', 100);
-            $table->string('no_hp', 20);
+            $table->string('mapel', 40);
             $table->integer('status')->default(1);
+            $table->timestamps();
         });
     }
 

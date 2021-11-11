@@ -23,9 +23,4 @@ class Spp extends Model
     {
         return $query->where('status', static::STATUS_ACTIVE);
     }
-
-    // public function getAM()
-    // {
-    //     return $this->belongsTo(User::class, 'user_id', 'id');
-    // }
 }
