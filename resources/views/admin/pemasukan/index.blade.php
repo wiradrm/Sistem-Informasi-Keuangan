@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-Prospek AM
+Data Pemasukan
 @endsection
 @section('content')
 <!-- Page Heading -->
@@ -10,9 +10,15 @@ Prospek AM
 <div class="row my-4">
    <div class="col-md-6">
       <div class="d-flex justify-content-start">
-         @if(Auth::user()->jabatan_id != 1 && Auth::user()->jabatan_id != 9)
-         <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary">Tambah Data</button>
-         <button type="submit" data-target="#importModal" data-toggle="modal" class="btn btn-success mx-3"><i class='bx bxs-file-import' ></i> Import Excel</button>
+         <form class="form-inline">
+            <div class="form-group">
+               <label for="search" class="sr-only">Search</label>
+               <input type="text" class="form-control" id="search" placeholder="Cari Data Pemasukan" name="jenis_transaksi">
+            </div>
+         </form>
+         @if(Auth::user()->akses_id == 2)
+         <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary mx-3">Tambah Data</button>
+         {{-- <button type="submit" data-target="#importModal" data-toggle="modal" class="btn btn-success"><i class='bx bxs-file-import' ></i> Import Excel</button>
          <div class="modal fade bd-example-modal-lg text-left" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModal" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                <div class="modal-content">
@@ -22,7 +28,7 @@ Prospek AM
                      <span aria-hidden="true">&times;</span>
                   </button>
                   </div>
-                  <form action="{{route('am.import')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{route('pemasukan.import')}}" method="POST" enctype="multipart/form-data">
                   @csrf
                   <div class="modal-body">
                      <div class="input-group mb-3">
@@ -39,52 +45,41 @@ Prospek AM
                   </form>
                </div>
             </div>
-         </div>
+         </div> --}}
          @endif
       </div>
    </div>
    <div class="col-md-6">
       <div class="d-flex justify-content-end">
-         <a href="{{route('am.export')}}" class="btn btn-info mx-3"><i class='bx bxs-printer' ></i> Cetak Laporan</a>
-         <div class="dropdown">
+         {{-- <a href="{{route('pemasukan.export')}}" class="btn btn-info "><i class='bx bxs-printer' ></i> Cetak Laporan</a> --}}
+         {{-- <div class="dropdown">
             <a class="btn btn-outline-secondary dropdown-toggle btn-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                <i class='bx bx-filter' ></i>
                Filter
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" href="{{route('am')}}">Default</a>
-               <a class="dropdown-item" href="?orderasc=created_at">Tanggal</a>
+               <a class="dropdown-item" href="{{route('pemasukan')}}">Default</a>
             </div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="row mb-3">
-   <div class="col-md-3">
-      <label>Status</label>
-      <div class="dropdown">
-         <a class="form-control dropdown-toggle select-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Status
-         </a>
-         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="{{route('am')}}">Default</a>
-            @foreach($statustransaksi as $key => $item)
-               <a class="dropdown-item" href="?status_transaksi={{$item->id}}">{{$item->status_transaksi}}</a>
-            @endforeach
-         </div>
+         </div> --}}
       </div>
    </div>
 </div>
 <!-- Content Row -->
 <div class="card shadow mb-4">
    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Data Prospek AM</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Data Pemasukan</h6>
    </div>
    <div class="card-body">
       <div class="table-responsive">
-         @if (\Session::has('info'))
+         @if (\Session::has('info') || \Session::has('error'))
+            @if(\Session::has('info'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @endif
+            @if(\Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @endif
                {!! \Session::get('info') !!}
+               {!! \Session::get('error') !!}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                </button>
@@ -102,13 +97,10 @@ Prospek AM
          <table class="table table-striped" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>AM</th>
-                  <th>Prospek</th>
-                  <th>Layanan</th>
-                  <th>Progress</th>
-                  <th>Status</th>
+                  <th>Jenis Pemasukan</th>
+                  <th>Nominal</th>
                   <th>Tanggal</th>
-                  @if(Auth::user()->jabatan_id != 1 && Auth::user()->jabatan_id != 9)
+                  @if(Auth::user()->akses_id == 2)
                   <th class="text-center">Action</th>
                   @endif
                </tr>
@@ -117,19 +109,16 @@ Prospek AM
                @if($models->count() == 0)
                   <tr>
                      <td colspan="100%" align="center">
-                        No data
+                           No data
                      </td>
                   </tr>
                @endif
                @foreach($models as $key => $item)
                <tr>
-                  <td>{{$item->getAM->nama_user}}</td>
-                  <td>{{$item->pelanggan}}</td>
-                  <td>{{$item->getProduk->nama_produk}}</td>
-                  <td>{{$item->progress}}</td>
-                  <td>{{$item->getStatusTransaksi->status_transaksi}}</td>
-                  <td>{{date('d/m/Y', strtotime($item->created_at))}}</td>
-                  @if(Auth::user()->jabatan_id != 1 && Auth::user()->jabatan_id != 9)
+                  <td>{{$item->jenis_transaksi}}</td>
+                  <td>{{$item->jumlah}}</td>
+                  <td>{{$item->create_at}}</td>
+                  @if(Auth::user()->akses_id == 2)
                   <td class="text-center">
                      <a class="btn-table text-danger" href="" data-toggle="modal" data-target="#deleteModal-{{$item->id}}"><i class='bx bxs-trash-alt'></i></a>
                      <a class="btn-table text-info" href="#" data-toggle="modal" data-target="#updateModal-{{$item->id}}"><i class='bx bxs-edit' ></i></a>
@@ -142,10 +131,10 @@ Prospek AM
                                  <span aria-hidden="true">×</span>
                                  </button>
                               </div>
-                              <div class="modal-body">Apakah anda yakin menghapus data "{{$item->getAM->nama_user}}"</div>
+                              <div class="modal-body">Apakah anda yakin menghapus data "{{$item->jenis_transaksi}}"</div>
                               <div class="modal-footer">
                                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                 <form action="{{route('am.delete',$item->id)}}" method="POST">
+                                 <form action="{{route('pemasukan.delete',$item->id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="btn btn-primary">
@@ -165,34 +154,20 @@ Prospek AM
                                  <span aria-hidden="true">&times;</span>
                               </button>
                               </div>
-                              <form action="{{route('am.update', $item->id)}}" method="POST">
+                              <form action="{{route('pemasukan.update', $item->id)}}" method="POST">
                               @csrf
                               @method('PUT')
                               <div class="modal-body">
+                                 <input hidden type="text" class="form-control" id="id" name="id" value="{{$item->id}}">
                                  <div class="form-group">
-                                    <label for="pelanggan" class="col-form-label">Prospek</label>
-                                    <input type="text" class="form-control" id="pelanggan" name="pelanggan" value="{{$item->pelanggan}}">
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="product_id" class="col-form-label">Layanan</label>
-                                    <select name="product_id" id="product_id" class="form-control">
-                                       @foreach($produk as $key => $data)
-                                       <option <?php if($data->id == $item->product_id) echo "selected" ?> value="{{$data->id}}">{{$data->nama_produk}}</option>
-                                       @endforeach
-                                    </select>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="progress" class="col-form-label">Progress</label>
-                                    <input type="text" class="form-control" id="progress" name="progress" value="{{$item->progress}}">
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="status_transaksi_id" class="col-form-label">Status Transaksi</label>
-                                    <select name="status_transaksi_id" id="status_transaksi_id" class="form-control">
-                                       @foreach($statustransaksi as $key => $data)
-                                       <option <?php if($data->id == $item->status_transaksi_id) echo "selected" ?> value="{{$data->id}}">{{$data->status_transaksi}}</option>
-                                       @endforeach
-                                    </select>
-                                 </div>
+                                    <label for="jenis_transaksi" class="col-form-label">Jenis Pemasukan</label>
+                                    <input type="text" class="form-control" id="jenis_transaksi" name="jenis_transaksi" value="{{$item->jenis_transaksi}}">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="jumlah" class="col-form-label">Jumlah</label>
+                                    <input type="text" class="form-control" id="rupiah" name="jumlah" value="{{$item->jumlah}}">
+                                  </div>
+
                               </div>
                               <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -212,18 +187,34 @@ Prospek AM
       {{ $models->appends(\Request::query())->links() }}
    </div>
 </div>
-@if(Auth::user()->jabatan_id != 1 && Auth::user()->jabatan_id != 9)
-@include('admin.am.create')
+<script type="text/javascript">
+		
+		var rupiah = document.getElementById('rupiah');
+		rupiah.addEventListener('keyup', function(e){
+			// tambahkan 'Rp.' pada saat form di ketik
+			// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+			rupiah.value = formatRupiah(this.value, 'Rp. ');
+		});
+ 
+		/* Fungsi formatRupiah */
+		function formatRupiah(angka, prefix){
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+ 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+ 
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+		}
+	</script>
+@if(Auth::user()->akses_id == 2)
+@include('admin.pemasukan.create')
 @endif
-@endsection
-@section('script')
-<script>
-   $('#filter_input_date').change(function(){
-      $('#form_filter_input_date').submit();
-   });
-
-   $('#filter_input_ps').change(function(){
-      $('#form_filter_input_ps').submit();
-   });
-</script>
 @endsection

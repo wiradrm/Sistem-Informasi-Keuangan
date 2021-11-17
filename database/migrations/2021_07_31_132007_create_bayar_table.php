@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePengeluaranTable extends Migration
+class CreateBayarTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreatePengeluaranTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_pengeluaran', function (Blueprint $table) {
+        Schema::create('tb_bayar', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('jenis_transaksi');
+            $table->integer('nisn');
+            $table->integer('kode_spp');
+            $table->string('bulan');
             $table->string('jumlah');
+            $table->string('status_transaksi');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
@@ -29,6 +32,6 @@ class CreatePengeluaranTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_pengeluaran');
+        Schema::dropIfExists('tb_bayar');
     }
 }

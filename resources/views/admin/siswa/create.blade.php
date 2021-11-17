@@ -23,6 +23,10 @@
           <input type="text" class="form-control" id="tempat" name="tempat">
         </div>
         <div class="form-group">
+          <label for="angkatan" class="col-form-label">Angkatan</label>
+          <input type="text" class="form-control" id="angkatan" name="angkatan">
+        </div>
+        <div class="form-group">
           <label for="tanggal" class="col-form-label">Tanggal Lahir</label>
           <input type="date" class="form-control" id="tanggal" name="tanggal">
         </div>

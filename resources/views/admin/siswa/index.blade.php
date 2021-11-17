@@ -86,6 +86,8 @@ Data Siswa
                   <th>NISN</th>
                   <th>Nama</th>
                   <th>Tempat Lahir</th>
+                  <th>Angkatan</th>
+
                   <th>Tanggal Lahir</th>
                   <th>Alamat</th>
                   <th>Jenis Kelamin</th>
@@ -107,6 +109,8 @@ Data Siswa
                   <td>{{$item->nisn}}</td>
                   <td>{{$item->nama_siswa}}</td>
                   <td>{{$item->tempat}}</td>
+                  <td>{{$item->angkatan}}</td>
+
                   <td>{{$item->tanggal}}</td>
                   <td>{{$item->alamat}}</td>
                   <td>{{$item->jenis_kelamin}}</td>
@@ -162,6 +166,10 @@ Data Siswa
                                   <div class="form-group">
                                     <label for="tempat" class="col-form-label">Tempat Lahir</label>
                                     <input type="text" class="form-control" id="tempat" name="tempat" value="{{$item->tempat}}">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="angkatan" class="col-form-label">Angkatan</label>
+                                    <input type="text" class="form-control" id="angkatan" name="angkatan" value="{{$item->angkatan}}">
                                   </div>
                                   <div class="form-group">
                                     <label for="tanggal" class="col-form-label">Tanggal Lahir</label>

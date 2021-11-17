@@ -14,12 +14,10 @@ class CreateAnggaranTable extends Migration
     public function up()
     {
         Schema::create('tb_anggaran', function (Blueprint $table) {
-            $table->bigIncrements('anggaran_id');
+            $table->bigIncrements('id');
             $table->integer('no_anggaran')->unique();
-            $table->integer('kode_spp');
-            $table->string('username');
             $table->string('jenis_anggaran');
-            $table->string('jumlah_bayar');
+            $table->string('jumlah');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

@@ -32,6 +32,7 @@ class SiswaImport implements ToModel, WithValidation, WithStartRow
             '3' => 'required',
             '4' => 'required',
             '5' => 'required',
+            '6' => 'required'
         ];
     }
 
@@ -42,8 +43,9 @@ class SiswaImport implements ToModel, WithValidation, WithStartRow
             '1.required' => 'Nama Siswa is required.',
             '2.required' => 'Tempat Lahir is required.',
             '3.required' => 'Tanggal Lahir is required.',
-            '4.required' => 'Alamat is required.',
-            '5.required' => 'Jenis Kelamin is required.',
+            '4.required' => 'Angkatan is required.',
+            '5.required' => 'Alamat is required.',
+            '6.required' => 'Jenis Kelamin is required.',
         ];
     }
 
@@ -54,8 +56,9 @@ class SiswaImport implements ToModel, WithValidation, WithStartRow
             'nama_siswa'    => $row[1],
             'tempat'             => $row[2],
             'tanggal'             => $row[3],
-            'alamat'             => $row[4],
-            'jenis_kelamin'   => $row[5],
+            'angkatan'             => $row[4],
+            'alamat'             => $row[5],
+            'jenis_kelamin'   => $row[6],
         ]);
     }
 }

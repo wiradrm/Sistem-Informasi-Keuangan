@@ -19,6 +19,7 @@ class CreateSiswaTable extends Migration
             $table->string('nama_siswa', 100);
             $table->string('tempat', 100);
             $table->date('tanggal');
+            $table->string('angkatan', 100);
             $table->string('alamat', 100);
             $table->string('jenis_kelamin', 20);
             $table->integer('status')->default(1);

@@ -14,8 +14,7 @@ class CreatePemasukanTable extends Migration
     public function up()
     {
         Schema::create('tb_pemasukan', function (Blueprint $table) {
-            $table->bigIncrements('kode_transaksi');
-            $table->integer('kode_laporan')->unique();
+            $table->bigIncrements('id');
             $table->string('jenis_transaksi');
             $table->integer('jumlah');
             $table->integer('status')->default(1);

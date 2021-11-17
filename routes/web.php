@@ -44,6 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/modal', 'JurnalController@index')->name('modal');
 
+    Route::get('/bayar', 'BayarController@index')->name('bayar');
+
+
     Route::get('/transaksi', 'TransaksiController@index')->name('transaksi');
 
 
@@ -56,14 +59,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/guru/store', 'GuruController@store')->name('guru.store');
         Route::put('/guru/update/{guru_id}', 'GuruController@update')->name('guru.update');
         Route::put('/guru/delete/{guru_id}', 'GuruController@destroy')->name('guru.delete');
-        Route::get('/guru/export', 'GuruController@export')->name('guru.export');
         Route::post('/guru/import', 'GuruController@import')->name('guru.import');
 
         Route::post('/siswa/store', 'SiswaController@store')->name('siswa.store');
         Route::put('/siswa/update/{siswa_id}', 'SiswaController@update')->name('siswa.update');
         Route::put('/siswa/delete/{siswa_id}', 'SiswaController@destroy')->name('siswa.delete');
-        Route::get('/siswa/export', 'SiswaController@export')->name('siswa.export');
         Route::post('/siswa/import', 'SiswaController@import')->name('siswa.import');
+
+        Route::post('/pemasukan/store', 'PemasukanController@store')->name('pemasukan.store');
+        Route::put('/pemasukan/update/{id}', 'PemasukanController@update')->name('pemasukan.update');
+        Route::put('/pemasukan/delete/{id}', 'PemasukanController@destroy')->name('pemasukan.delete');
 
         Route::put('/profile/update/{id}', 'DashboardController@profile')->name('profile.update');
 

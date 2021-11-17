@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Exports\GuruExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class GuruController extends Controller
+class TransaksiController extends Controller
 {
     protected $page = 'admin.transaksi.';
     protected $index = 'admin.transaksi.index';

@@ -49,6 +49,7 @@
                      <a class="collapse-item" href="{{route('guru')}}">Data Guru</a>
                      <a class="collapse-item" href="{{route('siswa')}}">Data Siswa</a>
                      <a class="collapse-item" href="{{route('kelas')}}">Data Kelas</a>
+                     <a class="collapse-item" href="{{route('spp')}}">Data SPP</a>
                   </div>
                </div>
             </li>
@@ -61,7 +62,7 @@
                <div id="collapseUtilities_2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                      <h6 class="collapse-header">Kas Masuk:</h6>
-                     <a class="collapse-item" href="{{route('spp')}}">SPP</a>
+                     <a class="collapse-item" href="{{route('bayar')}}">Pembayaran SPP</a>
                      <a class="collapse-item" href="{{route('pemasukan')}}">Kas Masuk Lainnya</a>
                   </div>
                </div>
