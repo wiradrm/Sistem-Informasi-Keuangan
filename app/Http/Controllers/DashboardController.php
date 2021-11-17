@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use DB;
 use App\Guru;
 use App\Kelas;
 use App\Siswa;
@@ -40,10 +41,16 @@ class DashboardController extends Controller
         $guru = Guru::isNotDeleted()->count();
         $siswa = Siswa::isNotDeleted()->count();
         $kelas = Kelas::isNotDeleted()->count();
-        $kas_masuk = Pemasukan::isNotDeleted()->count();
+        $pengeluaran = DB::table("tb_pengeluaran")->get()->sum("jumlah");
+        $kas_masuk = DB::table("tb_pemasukan")->get()->sum("jumlah");
+        $saldo_awal = 0;
+        $spp = DB::table("tb_bayar")->where("status_transaksi", 1)->sum("jumlah");
+        $pemasukan = $kas_masuk+$spp;
+        $pengeluaran = DB::table("tb_pengeluaran")->get()->sum("jumlah");
+        $akhir = $pemasukan-$pengeluaran;
         
 
-        return view($this->index, compact('kelas', 'guru', 'siswa', 'kas_masuk'));
+        return view($this->index, compact('kelas', 'guru', 'siswa', 'saldo_awal', 'pemasukan', 'pengeluaran', 'akhir'));
     }
 
     public function profile(Request $request, $id)

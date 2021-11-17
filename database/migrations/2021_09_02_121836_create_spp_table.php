@@ -15,7 +15,7 @@ class CreateSppTable extends Migration
     {
         Schema::create('tb_spp', function (Blueprint $table) {
             $table->bigIncrements('spp_id');
-            $table->integer('kode_spp')->unique();
+            $table->string('kode_spp')->unique();
             $table->string('angkatan');
             $table->string('bulan');
             $table->string('jumlah_bayar');

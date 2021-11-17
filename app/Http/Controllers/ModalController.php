@@ -11,14 +11,14 @@ use App\Pemasukan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Exports\JurnalExport;
+use App\Exports\ModalExport;
 
 use Maatwebsite\Excel\Facades\Excel;
 
-class JurnalController extends Controller
+class ModalController extends Controller
 {
-    protected $page = 'admin.jurnal.';
-    protected $index = 'admin.jurnal.index';
+    protected $page = 'admin.modal.';
+    protected $index = 'admin.modal.index';
 
     /**
      * Display a listing of the resource.
@@ -36,8 +36,9 @@ class JurnalController extends Controller
         $jum_keluar = DB::table("tb_pengeluaran")->get()->sum("jumlah");
         $jum_masuk = DB::table("tb_pemasukan")->get()->sum("jumlah");
         $jum_spp = Bayar::isNotDeleted()->where("status_transaksi", 1)->get()->sum("jumlah");
-
-        $total = $jum_keluar+$jum_masuk+$jum_spp;
+        
+        $pendapatan = $jum_masuk+$jum_spp;
+        $total = $jum_masuk+$jum_spp-$jum_keluar;
 
         if ($filter_tgl_input_from && $filter_tgl_input_to) {
             $pemasukan = $pemasukan->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to);
@@ -45,11 +46,11 @@ class JurnalController extends Controller
             $bayar = $bayar->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to);
         }
 
-        return view($this->index, compact('pemasukan', 'pengeluaran', 'bayar','total'));
+        return view($this->index, compact('pemasukan', 'jum_keluar', 'pengeluaran', 'bayar', 'total','pendapatan'));
     }
 
 
     public function export(){
-        return Excel::download(new JurnalExport, 'report_jurnal_'.date('d_m_Y_H_i_s').'.xlsx');
+        return Excel::download(new ModalExport, 'report_modal_'.date('d_m_Y_H_i_s').'.xlsx');
     }
 }

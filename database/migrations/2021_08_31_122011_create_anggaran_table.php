@@ -15,8 +15,8 @@ class CreateAnggaranTable extends Migration
     {
         Schema::create('tb_anggaran', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('no_anggaran')->unique();
             $table->string('jenis_anggaran');
+            $table->string('anggaran');
             $table->string('jumlah');
             $table->integer('status')->default(1);
             $table->timestamps();

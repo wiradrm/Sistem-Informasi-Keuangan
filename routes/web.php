@@ -32,22 +32,28 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('/kelas', 'KelasController@index')->name('kelas');
     
-    Route::get('/spp', 'SppController@koordinat')->name('spp');
+    Route::get('/spp', 'SppController@index')->name('spp');
     
-    Route::get('/pemasukan', 'PemasukanController@index')->name('pemasukan');
+    Route::get('/pemasukan', 'MasukController@index')->name('pemasukan');
 
     Route::get('/pengeluaran', 'PengeluaranController@index')->name('pengeluaran');
 
     Route::get('/anggaran', 'AnggaranController@index')->name('anggaran');
 
     Route::get('/jurnal', 'JurnalController@index')->name('jurnal');
+    Route::get('/modal', 'ModalController@index')->name('modal');
 
-    Route::get('/modal', 'JurnalController@index')->name('modal');
+
 
     Route::get('/bayar', 'BayarController@index')->name('bayar');
 
 
     Route::get('/transaksi', 'TransaksiController@index')->name('transaksi');
+    
+    Route::get('/jurnal/export', 'JurnalController@export')->name('jurnal.export');
+    Route::get('/modal/export', 'ModalController@export')->name('modal.export');
+
+    
 
 
     Route::group(['middleware' => 'admin'], function () {
@@ -66,9 +72,29 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/siswa/delete/{siswa_id}', 'SiswaController@destroy')->name('siswa.delete');
         Route::post('/siswa/import', 'SiswaController@import')->name('siswa.import');
 
-        Route::post('/pemasukan/store', 'PemasukanController@store')->name('pemasukan.store');
-        Route::put('/pemasukan/update/{id}', 'PemasukanController@update')->name('pemasukan.update');
-        Route::put('/pemasukan/delete/{id}', 'PemasukanController@destroy')->name('pemasukan.delete');
+        Route::post('/pemasukan/store', 'MasukController@store')->name('pemasukan.store');
+        Route::put('/pemasukan/update/{id}', 'MasukController@update')->name('pemasukan.update');
+        Route::put('/pemasukan/delete/{id}', 'MasukController@destroy')->name('pemasukan.delete');
+
+        Route::post('/pengeluaran/store', 'PengeluaranController@store')->name('pengeluaran.store');
+        Route::put('/pengeluaran/update/{id_transaksi}', 'PengeluaranController@update')->name('pengeluaran.update');
+        Route::put('/pengeluaran/delete/{id_transaksi}', 'PengeluaranController@destroy')->name('pengeluaran.delete');
+        
+        Route::post('/anggaran/store', 'AnggaranController@store')->name('anggaran.store');
+        Route::put('/anggaran/update/{id}', 'AnggaranController@update')->name('anggaran.update');
+        Route::put('/anggaran/delete/{id}', 'AnggaranController@destroy')->name('anggaran.delete');
+        Route::post('/anggaran/import', 'AnggaranController@import')->name('anggaran.import');
+
+        Route::post('/spp/store', 'SppController@store')->name('spp.store');
+        Route::put('/spp/update/{spp_id}', 'SppController@update')->name('spp.update');
+        Route::put('/spp/delete/{spp_id}', 'SppController@destroy')->name('spp.delete');
+
+        Route::post('/bayar/update/{id}', 'BayarController@update')->name('bayar.update');
+        Route::post('/bayar/import', 'BayarController@import')->name('bayar.import');
+
+        // Route::get('/jurnal/export', 'JurnalController@export')->name('jurnal.export');
+        // Route::get('/modal/export', 'ModalController@export')->name('modal.export');
+
 
         Route::put('/profile/update/{id}', 'DashboardController@profile')->name('profile.update');
 

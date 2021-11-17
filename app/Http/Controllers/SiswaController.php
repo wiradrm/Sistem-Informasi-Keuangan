@@ -127,6 +127,7 @@ class SiswaController extends Controller
         $model->tempat = $request->tempat;
         $model->tanggal = $request->tanggal;
         $model->angkatan = $request->angkatan;
+
         $model->alamat = $request->alamat;
         $model->jenis_kelamin = $request->jenis_kelamin;
         $model->save();

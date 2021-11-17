@@ -39,7 +39,7 @@ class GuruController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name');
-        $models = guru::isNotDeleted();
+        $models = Guru::isNotDeleted();
 
         if ($name) {
             $models = $models->where('nama_guru', 'like', '%' . $name . '%');

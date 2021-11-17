@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\User;
+use App\Bayar;
 use App\Anggaran;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class AnggaranImport implements ToModel, WithValidation, WithStartRow
+class BayarImport implements ToModel, WithValidation, WithStartRow
 {
     /**
     * @param array $row
@@ -30,6 +30,8 @@ class AnggaranImport implements ToModel, WithValidation, WithStartRow
             '0' => 'required',
             '1' => 'required',
             '2' => 'required',
+            '3' => 'required',
+            '4' => 'required',
         ];
     }
 
@@ -37,9 +39,11 @@ class AnggaranImport implements ToModel, WithValidation, WithStartRow
     {
         return [
             '0.required' => 'Jenis Anggaran is required.',
+            '1.required' => 'Nama Anggaran is required.',
             '2.required' => 'Nama Anggaran is required.',
 
             '3.required' => 'Jumlah is required.',
+            '4.required' => 'Nama Anggaran is required.',
         ];
     }
     /**
@@ -49,11 +53,14 @@ class AnggaranImport implements ToModel, WithValidation, WithStartRow
     */
     public function model(array $row)
     {
-        return new Anggaran([
-            'jenis_anggaran'           => $row[0],
-            'anggaran'           => $row[1],
+        return new Bayar([
+            'nisn'           => $row[0],
+            'kode_spp'           => $row[1],
+            'bulan'           => $row[2],
 
-            'jumlah'     => $row[2],
+            'jumlah'     => $row[3],
+            'status_transaksi'           => $row[4],
+
         ]);
     }
 }

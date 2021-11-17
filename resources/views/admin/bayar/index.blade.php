@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-Data Kelas
+Data Pembayaran SPP
 @endsection
 @section('content')
 <!-- Page Heading -->
@@ -13,12 +13,12 @@ Data Kelas
          <form class="form-inline">
             <div class="form-group">
                <label for="search" class="sr-only">Search</label>
-               <input type="text" class="form-control" id="search" placeholder="Cari Data Kelas" name="kelas">
+               <input type="text" class="form-control" id="search" placeholder="Cari Data Nama" name="nama">
             </div>
          </form>
          @if(Auth::user()->akses_id == 2)
-         <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary mx-3">Tambah Data</button>
-         {{-- <button type="submit" data-target="#importModal" data-toggle="modal" class="btn btn-success"><i class='bx bxs-file-import' ></i> Import Excel</button>
+         {{-- <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary mx-3">Tambah Data</button> --}}
+         <button type="submit" data-target="#importModal" data-toggle="modal" class="btn btn-success"><i class='bx bxs-file-import' ></i> Import Excel</button>
          <div class="modal fade bd-example-modal-lg text-left" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModal" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                <div class="modal-content">
@@ -28,7 +28,7 @@ Data Kelas
                      <span aria-hidden="true">&times;</span>
                   </button>
                   </div>
-                  <form action="{{route('kelas.import')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{route('bayar.import')}}" method="POST" enctype="multipart/form-data">
                   @csrf
                   <div class="modal-body">
                      <div class="input-group mb-3">
@@ -45,20 +45,21 @@ Data Kelas
                   </form>
                </div>
             </div>
-         </div> --}}
+            {{-- tutup --}}
+         </div>
          @endif
       </div>
    </div>
    <div class="col-md-6">
       <div class="d-flex justify-content-end">
-         {{-- <a href="{{route('kelas.export')}}" class="btn btn-info "><i class='bx bxs-printer' ></i> Cetak Laporan</a> --}}
+         {{-- <a href="{{route('bayar.export')}}" class="btn btn-info "><i class='bx bxs-printer' ></i> Cetak Laporan</a> --}}
          {{-- <div class="dropdown">
             <a class="btn btn-outline-secondary dropdown-toggle btn-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                <i class='bx bx-filter' ></i>
                Filter
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" href="{{route('kelas')}}">Default</a>
+               <a class="dropdown-item" href="{{route('bayar')}}">Default</a>
             </div>
          </div> --}}
       </div>
@@ -67,7 +68,7 @@ Data Kelas
 <!-- Content Row -->
 <div class="card shadow mb-4">
    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Data Kelas</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Data Pembayaran SPP</h6>
    </div>
    <div class="card-body">
       <div class="table-responsive">
@@ -97,86 +98,63 @@ Data Kelas
          <table class="table table-striped" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>No Kelas</th>
-                  <th>Kelas</th>
-                  <th>Wali</th>
+                  <th>NISN</th>
+                  <th>Nama</th>
+                  <th>Kode SPP</th>
+                  <th>Bulan</th>
+                  <th>Jumlah Bayar</th>
+                  <th>Status Transaksi</th>
                   @if(Auth::user()->akses_id == 2)
                   <th class="text-center">Action</th>
                   @endif
                </tr>
             </thead>
             <tbody>
-               @if($models->count() == 0)
+               @if(  $models->count() == 0)
                   <tr>
                      <td colspan="100%" align="center">
                            No data
                      </td>
                   </tr>
                @endif
-               @foreach($models as $key => $item)
+               @foreach(  $models as $key => $item)
                <tr>
-                  <td>{{$item->no_kelas}}</td>
-                  <td>{{$item->kelas}}</td>
-                  <td>{{$item->wali}}</td>
-                  @if(Auth::user()->akses_id == 2)
+                  <td>{{$item->nisn}}</td>
+                  <td>{{$item->getSiswa->nama_siswa}}</td>
+                  <td>{{$item->kode_spp}}</td>
+                  <td>{{$item->bulan}}</td>
+                  <td>{{$item->jumlah}}</td>
+                  
+                  @if ($item->status_transaksi == 0)
+                      <td> <span class="badge-point bg-warning">Belum Bayar</span></td>
+                  @else
+                       <td colspan="2"> <span class="badge-point bg-success">Sudah Bayar</span></td> 
+                  @endif
+                  
+                  
+                  @if($item->status_transaksi != 1)
                   <td class="text-center">
-                     <a class="btn-table text-danger" href="" data-toggle="modal" data-target="#deleteModal-{{$item->kelas_id}}"><i class='bx bxs-trash-alt'></i></a>
-                     <a class="btn-table text-info" href="#" data-toggle="modal" data-target="#updateModal-{{$item->kelas_id}}"><i class='bx bxs-edit' ></i></a>
-                     <div class="modal fade" id="deleteModal-{{$item->kelas_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                     <a class="btn btn-danger" href="" data-toggle="modal" data-target="#updateModal-{{$item->id}}">Bayar</a>
+                     <div class="modal fade" id="updateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                            <div class="modal-content">
                               <div class="modal-header">
-                                 <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                                 <h5 class="modal-title" id="exampleModalLabel">Bayar SPP</h5>
                                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                  <span aria-hidden="true">×</span>
                                  </button>
                               </div>
-                              <div class="modal-body">Apakah anda yakin menghapus data "{{$item->kelas}}"</div>
+                              <div class="modal-body">"{{$item->getSiswa->nama_siswa}}" melakukan pembayaran SPP, sudah benar?</div>
                               <div class="modal-footer">
                                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                 <form action="{{route('kelas.delete',$item->kelas_id)}}" method="POST">
+                                 <form action="{{route('bayar.update',$item->id)}}" method="POST">
                                     @csrf
-                                    @method('PUT')
+                                    @method('POST')
                                     <button type="submit" class="btn btn-primary">
-                                       Hapus
+                                       Bayar
                                     </button>
                                  </form>
                               </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal fade bd-example-modal-lg text-left" id="updateModal-{{$item->kelas_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                              <h5 class="modal-title" id="createModalLabel">Ubah Data</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                              </button>
-                              </div>
-                              <form action="{{route('kelas.update', $item->kelas_id)}}" method="POST">
-                              @csrf
-                              @method('PUT')
-                              <div class="modal-body">
-                                 <input hidden type="text" class="form-control" id="kelas_id" name="kelas_id" value="{{$item->kelas_id}}">
-                                 <div class="form-group">
-                                    <label for="no_kelas" class="col-form-label">No Kelas</label>
-                                    <input type="text" class="form-control" id="no_kelas" name="no_kelas" value="{{$item->no_kelas}}">
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="kelas" class="col-form-label">Kelas</label>
-                                    <input type="text" class="form-control" id="kelas" name="kelas" value="{{$item->kelas}}">
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="wali" class="col-form-label">Wali</label>
-                                    <input type="text" class="form-control" id="wali" name="wali" value="{{$item->wali}}">
-                                 </div>
-                              </div>
-                              <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-primary">Submit</button>
-                              </div>
-                              </form>
                            </div>
                         </div>
                      </div>
@@ -187,10 +165,9 @@ Data Kelas
             </tbody>
          </table>
       </div>
-      {{ $models->appends(\Request::query())->links() }}
+      {{  $models->appends(\Request::query())->links() }}
    </div>
 </div>
 @if(Auth::user()->akses_id == 2)
-@include('admin.kelas.create')
 @endif
 @endsection

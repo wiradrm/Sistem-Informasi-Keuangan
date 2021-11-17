@@ -15,8 +15,8 @@ class CreateBayarTable extends Migration
     {
         Schema::create('tb_bayar', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('nisn');
-            $table->integer('kode_spp');
+            $table->bigInteger('nisn');
+            $table->string('kode_spp');
             $table->string('bulan');
             $table->string('jumlah');
             $table->string('status_transaksi');

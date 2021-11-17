@@ -3,28 +3,31 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\Pengeluaran;
+use App\Anggaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use App\Imports\AnggaranImport;
+use Maatwebsite\Excel\Facades\Excel;
 
-class PengeluaranController extends Controller
+
+class AnggaranController extends Controller
 {
-    protected $page = 'admin.pengeluaran.';
-    protected $index = 'admin.pengeluaran.index';
+    protected $page = 'admin.anggaran.';
+    protected $index = 'admin.anggaran.index';
     protected $validator;
 
     protected function validationData($request){
         $this->validator      = Validator::make(
             $request,
             [
-                'jenis_transaksi'          => 'required',
+                'jenis_anggaran'          => 'required',
             ],
             [
                 'required'          => ':attribute is required.'
             ],
             [
-                'jenis_transaksi'           => 'Pengeluaran',
+                'jenis_anggaran'           => 'Anggaran',
             ]
         );
     }
@@ -36,10 +39,10 @@ class PengeluaranController extends Controller
      */
     public function index(Request $request)
     {
-        $jenis_transaksi = $request->get('jenis_transaksi');
+        $jenis_anggaran = $request->get('jenis_anggaran');
         $orderasc = $request->get('orderasc');
         $orderdesc = $request->get('orderdesc');
-        $models = Pengeluaran::isNotDeleted();
+        $models = Anggaran::isNotDeleted();
 
 
         $models = $models->paginate(20);
@@ -69,20 +72,22 @@ class PengeluaranController extends Controller
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
-        $model = new Pengeluaran();
-        $model->jenis_transaksi = $request->jenis_transaksi;
+        $model = new Anggaran();
+        $model->jenis_anggaran = $request->jenis_anggaran;
+        $model->anggaran = $request->anggaran;
+
         $model->jumlah = $request->jumlah;
         $model->save();
-        return redirect()->route('pengeluaran')->with('info', 'Berhasil menambah data');
+        return redirect()->route('anggaran')->with('info', 'Berhasil menambah data');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Pengeluaran  $Pengeluaran
+     * @param  \App\Anggaran  $Anggaran
      * @return \Illuminate\Http\Response
      */
-    public function show(Pengeluaran $Pengeluaran)
+    public function show(Anggaran $Anggaran)
     {
         //
     }
@@ -90,10 +95,10 @@ class PengeluaranController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Pengeluaran  $Pengeluaran
+     * @param  \App\Anggaran  $Anggaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pengeluaran $Pengeluaran)
+    public function edit(Anggaran $Anggaran)
     {
         //
     }
@@ -102,30 +107,38 @@ class PengeluaranController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Pengeluaran  $Pengeluaran
+     * @param  \App\Anggaran  $Anggaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id_transaksi)
+    public function update(Request $request, $id)
     {
 
-        $model = Pengeluaran::findOrFail($id_transaksi);
-        $model->jenis_transaksi = $request->jenis_transaksi;
+        $model = Anggaran::findOrFail($id);
+        $model->jenis_anggaran = $request->jenis_anggaran;
+        $model->anggaran = $request->anggaran;
+
         $model->jumlah = $request->jumlah;
         $model->save();
-        return redirect()->route('pengeluaran')->with('info', 'Berhasil mengubah data');
+        return redirect()->route('anggaran')->with('info', 'Berhasil mengubah data');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Pengeluaran  $Pengeluaran
+     * @param  \App\Anggaran  $Anggaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_transaksi)
+    public function destroy($id)
     {
-      $model = Pengeluaran::findOrFail($id_transaksi);
-      DB::table('tb_pengeluaran')->where('id_transaksi',$id_transaksi)->delete();
+      $model = Anggaran::findOrFail($id);
+      DB::table('tb_anggaran')->where('id',$id)->delete();
 
-      return redirect()->route('pengeluaran')->with('info', 'Berhasil menghapus data');
+      return redirect()->route('anggaran')->with('info', 'Berhasil menghapus data');
+    }
+
+    public function import(Request $request) 
+    {
+        Excel::import(new AnggaranImport, $request->file('file')->store('temp'));
+        return back()->with('info', 'Berhasil Menambah data');
     }
 }

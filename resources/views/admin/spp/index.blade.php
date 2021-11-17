@@ -97,9 +97,10 @@ Data SPP
          <table class="table table-striped" width="100%" cellspacing="0">
             <thead>
                <tr>
-                  <th>No Kelas</th>
-                  <th>Kelas</th>
-                  <th>Wali</th>
+                  <th>Kode SPP</th>
+                  <th>Angkatan</th>
+                  <th>Bulan</th>
+                  <th>Jumlah</th>
                   @if(Auth::user()->akses_id == 2)
                   <th class="text-center">Action</th>
                   @endif
@@ -115,14 +116,15 @@ Data SPP
                @endif
                @foreach($models as $key => $item)
                <tr>
-                  <td>{{$item->no_kelas}}</td>
-                  <td>{{$item->kelas}}</td>
-                  <td>{{$item->wali}}</td>
+                  <td>{{$item->kode_spp}}</td>
+                  <td>{{$item->angkatan}}</td>
+                  <td>{{$item->bulan}}</td>
+                  <td>{{$item->jumlah_bayar}}</td>
                   @if(Auth::user()->akses_id == 2)
                   <td class="text-center">
-                     <a class="btn-table text-danger" href="" data-toggle="modal" data-target="#deleteModal-{{$item->kelas_id}}"><i class='bx bxs-trash-alt'></i></a>
-                     <a class="btn-table text-info" href="#" data-toggle="modal" data-target="#updateModal-{{$item->kelas_id}}"><i class='bx bxs-edit' ></i></a>
-                     <div class="modal fade" id="deleteModal-{{$item->kelas_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                     <a class="btn-table text-danger" href="" data-toggle="modal" data-target="#deleteModal-{{$item->spp_id}}"><i class='bx bxs-trash-alt'></i></a>
+                     <a class="btn-table text-info" href="#" data-toggle="modal" data-target="#updateModal-{{$item->spp_id}}"><i class='bx bxs-edit' ></i></a>
+                     <div class="modal fade" id="deleteModal-{{$item->spp_id}}" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                            <div class="modal-content">
                               <div class="modal-header">
@@ -131,10 +133,10 @@ Data SPP
                                  <span aria-hidden="true">×</span>
                                  </button>
                               </div>
-                              <div class="modal-body">Apakah anda yakin menghapus data "{{$item->kelas}}"</div>
+                              <div class="modal-body">Apakah anda yakin menghapus data "{{$item->kode_spp}}"</div>
                               <div class="modal-footer">
                                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                 <form action="{{route('kelas.delete',$item->kelas_id)}}" method="POST">
+                                 <form action="{{route('kelas.delete',$item->spp_id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="btn btn-primary">
@@ -145,7 +147,7 @@ Data SPP
                            </div>
                         </div>
                      </div>
-                     <div class="modal fade bd-example-modal-lg text-left" id="updateModal-{{$item->kelas_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+                     <div class="modal fade bd-example-modal-lg text-left" id="updateModal-{{$item->spp_id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                            <div class="modal-content">
                               <div class="modal-header">
@@ -154,23 +156,45 @@ Data SPP
                                  <span aria-hidden="true">&times;</span>
                               </button>
                               </div>
-                              <form action="{{route('kelas.update', $item->kelas_id)}}" method="POST">
+                              <form action="{{route('kelas.update', $item->spp_id)}}" method="POST">
                               @csrf
                               @method('PUT')
                               <div class="modal-body">
-                                 <input hidden type="text" class="form-control" id="kelas_id" name="kelas_id" value="{{$item->kelas_id}}">
+                                 <input hidden type="text" class="form-control" id="spp_id" name="spp_id" value="{{$item->spp_id}}">
                                  <div class="form-group">
-                                    <label for="no_kelas" class="col-form-label">No Kelas</label>
-                                    <input type="text" class="form-control" id="no_kelas" name="no_kelas" value="{{$item->no_kelas}}">
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="kelas" class="col-form-label">Kelas</label>
-                                    <input type="text" class="form-control" id="kelas" name="kelas" value="{{$item->kelas}}">
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="wali" class="col-form-label">Wali</label>
-                                    <input type="text" class="form-control" id="wali" name="wali" value="{{$item->wali}}">
-                                 </div>
+                                    <label for="kode_spp" class="col-form-label">Kode SPP</label>
+                                    <input type="kode_spp" class="form-control" id="kode_spp" name="kode_spp" value="{{$item->kode_spp}}">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="angkatan" class="col-form-label">Angkatan</label>
+                                    <input type="text" class="form-control" id="angkatan" name="angkatan" value="{{$item->angkatan}}">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="bulan" class="col-form-label">Bulan</label>
+                                    <select name="bulan" id="bulan" class="form-control">
+
+                                      <option value="{{$item->bulan}}" selected hidden>{{$item->bulan}}</option>
+                                      <option value="Januari">Januari</option>
+                                    
+                                      <option value="Februari">Februari</option>
+                                      <option value="Maret">Maret</option>
+                                      <option value="April">April</option>
+                                      <option value="Mei">Mei</option>
+                                      <option value="Juni">Juni</option>
+                                      <option value="Juli">Juli</option>
+                                      <option value="Juli">Juli</option>
+                                      <option value="Agustus">Agustus</option>
+                                      <option value="September">September</option>
+                                      <option value="Oktober">Oktober</option>
+                                      <option value="November">November</option>
+                                      <option value="Desember">Desember</option>
+                          
+                                  </select>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="jumlah_bayar" class="col-form-label">Jumlah</label>
+                                    <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" value="{{$item->jumlah_bayar}}">
+                                  </div>
                               </div>
                               <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -191,6 +215,6 @@ Data SPP
    </div>
 </div>
 @if(Auth::user()->akses_id == 2)
-@include('admin.kelas.create')
+@include('admin.spp.create')
 @endif
 @endsection

@@ -7,20 +7,39 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{route('kelas.store')}}" method="POST" autocomplete="off">
+      <form action="{{route('spp.store')}}" method="POST" autocomplete="off">
       @csrf
       <div class="modal-body">
         <div class="form-group">
-          <label for="no_kelas" class="col-form-label">No Kelas</label>
-          <input type="text" class="form-control" id="no_kelas" name="no_kelas">
+          <label for="kode_spp" class="col-form-label">Kode SPP</label>
+          <input type="kode_spp" class="form-control" id="kode_spp" name="kode_spp">
         </div>
         <div class="form-group">
-          <label for="kelas" class="col-form-label">Kelas</label>
-          <input type="text" class="form-control" id="kelas" name="kelas">
+          <label for="angkatan" class="col-form-label">Angkatan</label>
+          <input type="text" class="form-control" id="angkatan" name="angkatan">
         </div>
         <div class="form-group">
-          <label for="wali" class="col-form-label">Wali</label>
-          <input type="text" class="form-control" id="wali" name="wali">
+          <label for="bulan" class="col-form-label">Bulan</label>
+          <select name="bulan" id="bulan" class="form-control">
+            <option value="Januari" selected>Januari</option>
+            <option value="Februari">Februari</option>
+            <option value="Maret">Maret</option>
+            <option value="April">April</option>
+            <option value="Mei">Mei</option>
+            <option value="Juni">Juni</option>
+            <option value="Juli">Juli</option>
+            <option value="Juli">Juli</option>
+            <option value="Agustus">Agustus</option>
+            <option value="September">September</option>
+            <option value="Oktober">Oktober</option>
+            <option value="November">November</option>
+            <option value="Desember">Desember</option>
+
+        </select>
+        </div>
+        <div class="form-group">
+          <label for="jumlah" class="col-form-label">Jumlah</label>
+          <input type="text" class="form-control" id="jumlah" name="jumlah">
         </div>
       </div>
       <div class="modal-footer">

@@ -7,20 +7,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{route('kelas.store')}}" method="POST" autocomplete="off">
+      <form action="{{route('anggaran.store')}}" method="POST" autocomplete="off">
       @csrf
       <div class="modal-body">
         <div class="form-group">
-          <label for="no_kelas" class="col-form-label">No Kelas</label>
-          <input type="text" class="form-control" id="no_kelas" name="no_kelas">
+          <label for="jenis_anggaran" class="col-form-label">Jenis Anggaran</label>
+          <select name="jenis_anggaran" id="jenis_anggaran" class="form-control">
+            <option value="Pendapatan" selected>Pendapatan</option>
+            <option value="Pengeluaran">Pengeluaran</option>
+        </select>
         </div>
         <div class="form-group">
-          <label for="kelas" class="col-form-label">Kelas</label>
-          <input type="text" class="form-control" id="kelas" name="kelas">
+          <label for="anggaran" class="col-form-label">Nama Anggaran</label>
+          <input type="text" class="form-control" id="anggaran" name="anggaran">
         </div>
         <div class="form-group">
-          <label for="wali" class="col-form-label">Wali</label>
-          <input type="text" class="form-control" id="wali" name="wali">
+          <label for="jumlah" class="col-form-label">Jumlah</label>
+          <input type="text" class="form-control" id="masking1" name="jumlah">
         </div>
       </div>
       <div class="modal-footer">

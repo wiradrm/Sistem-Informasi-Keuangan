@@ -20,7 +20,7 @@ Dashboard
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-uppercase mb-1">
                         Saldo Awal</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@currency($saldo_awal)</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-info-circle fa-2x text-gray-300"></i>
@@ -39,7 +39,7 @@ Dashboard
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-uppercase mb-1">
                         Kas Masuk</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@currency($pemasukan)</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-arrow-down fa-2x text-gray-300"></i>
@@ -58,7 +58,7 @@ Dashboard
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-uppercase mb-1">
                             Kas Keluar</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@currency($pengeluaran)</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-arrow-up fa-2x text-gray-300"></i>
@@ -69,14 +69,13 @@ Dashboard
         </a>
     </div>
     <div class="col-xl-4 col-md-4 mb-4">
-        <a style="text-decoration: none !important;" href="/laporan">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-uppercase mb-1">
                             Saldo Akhir</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$kas_masuk}}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@currency($akhir)</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-file fa-2x text-gray-300"></i>

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 
-class PemasukanController extends Controller
+class MasukController extends Controller
 {
     protected $page = 'admin.pemasukan.';
     protected $index = 'admin.pemasukan.index';
@@ -116,7 +116,7 @@ class PemasukanController extends Controller
         $model->jenis_transaksi = $request->jenis_transaksi;
         $model->jumlah = $request->jumlah;
         $model->save();
-        return redirect()->route('kelas')->with('info', 'Berhasil mengubah data');
+        return redirect()->route('pemasukan')->with('info', 'Berhasil mengubah data');
     }
 
     /**
@@ -130,6 +130,6 @@ class PemasukanController extends Controller
       $model = Pemasukan::findOrFail($id);
       DB::table('tb_pemasukan')->where('id',$id)->delete();
 
-      return redirect()->route('kelas')->with('info', 'Berhasil menghapus data');
+      return redirect()->route('pemasukan')->with('info', 'Berhasil menghapus data');
     }
 }

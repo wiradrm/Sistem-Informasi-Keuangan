@@ -116,8 +116,8 @@ Data Pemasukan
                @foreach($models as $key => $item)
                <tr>
                   <td>{{$item->jenis_transaksi}}</td>
-                  <td>{{$item->jumlah}}</td>
-                  <td>{{$item->create_at}}</td>
+                  <td>@currency($item->jumlah)</td>
+                  <td>{{$item->created_at}}</td>
                   @if(Auth::user()->akses_id == 2)
                   <td class="text-center">
                      <a class="btn-table text-danger" href="" data-toggle="modal" data-target="#deleteModal-{{$item->id}}"><i class='bx bxs-trash-alt'></i></a>
@@ -187,33 +187,6 @@ Data Pemasukan
       {{ $models->appends(\Request::query())->links() }}
    </div>
 </div>
-<script type="text/javascript">
-		
-		var rupiah = document.getElementById('rupiah');
-		rupiah.addEventListener('keyup', function(e){
-			// tambahkan 'Rp.' pada saat form di ketik
-			// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-			rupiah.value = formatRupiah(this.value, 'Rp. ');
-		});
- 
-		/* Fungsi formatRupiah */
-		function formatRupiah(angka, prefix){
-			var number_string = angka.replace(/[^,\d]/g, '').toString(),
-			split   		= number_string.split(','),
-			sisa     		= split[0].length % 3,
-			rupiah     		= split[0].substr(0, sisa),
-			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
- 
-			// tambahkan titik jika yang di input sudah menjadi angka ribuan
-			if(ribuan){
-				separator = sisa ? '.' : '';
-				rupiah += separator + ribuan.join('.');
-			}
- 
-			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-			return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-		}
-	</script>
 @if(Auth::user()->akses_id == 2)
 @include('admin.pemasukan.create')
 @endif

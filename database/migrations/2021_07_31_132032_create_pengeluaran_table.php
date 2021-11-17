@@ -14,8 +14,8 @@ class CreatePengeluaranTable extends Migration
     public function up()
     {
         Schema::create('tb_pengeluaran', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('jenis_transaksi');
+            $table->bigIncrements('id_transaksi');
+            $table->string('jenis_transaksi');
             $table->string('jumlah');
             $table->integer('status')->default(1);
             $table->timestamps();
