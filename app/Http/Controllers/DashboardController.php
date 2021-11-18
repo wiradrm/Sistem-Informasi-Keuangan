@@ -44,13 +44,15 @@ class DashboardController extends Controller
         $pengeluaran = DB::table("tb_pengeluaran")->get()->sum("jumlah");
         $kas_masuk = DB::table("tb_pemasukan")->where("jenis_transaksi", "!=", "Saldo Awal")->sum("jumlah");
 
+        $kas_masuk_all = DB::table("tb_pemasukan")->get()->sum("jumlah");
+
         $saldo_awal = DB::table("tb_pemasukan")->where("jenis_transaksi", "Saldo Awal")->sum("jumlah");
         
         
         $spp = DB::table("tb_bayar")->where("status_transaksi", 1)->sum("jumlah");
         $pemasukan = $kas_masuk+$spp;
         $pengeluaran = DB::table("tb_pengeluaran")->get()->sum("jumlah");
-        $akhir = $pemasukan-$pengeluaran;
+        $akhir = $kas_masuk_all+$spp-$pengeluaran;
         
 
         return view($this->index, compact('kelas', 'guru', 'siswa', 'saldo_awal', 'pemasukan', 'pengeluaran', 'akhir'));
