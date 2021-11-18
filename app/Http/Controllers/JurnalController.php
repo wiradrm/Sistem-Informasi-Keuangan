@@ -37,7 +37,7 @@ class JurnalController extends Controller
         $jum_masuk = DB::table("tb_pemasukan")->get()->sum("jumlah");
         $jum_spp = Bayar::isNotDeleted()->where("status_transaksi", 1)->get()->sum("jumlah");
 
-        $total = $jum_keluar+$jum_masuk+$jum_spp;
+        $total = $jum_masuk+$jum_spp-$jum_keluar;
 
         if ($filter_tgl_input_from && $filter_tgl_input_to) {
             $pemasukan = $pemasukan->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to);

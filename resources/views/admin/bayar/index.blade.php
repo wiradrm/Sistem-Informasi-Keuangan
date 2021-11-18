@@ -18,7 +18,7 @@ Data Pembayaran SPP
          </form>
          @if(Auth::user()->akses_id == 2)
          {{-- <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary mx-3">Tambah Data</button> --}}
-         <button type="submit" data-target="#importModal" data-toggle="modal" class="btn btn-success"><i class='bx bxs-file-import' ></i> Import Excel</button>
+         {{-- <button type="submit" data-target="#importModal" data-toggle="modal" class="btn btn-success"><i class='bx bxs-file-import' ></i> Import Excel</button>
          <div class="modal fade bd-example-modal-lg text-left" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModal" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                <div class="modal-content">
@@ -45,8 +45,8 @@ Data Pembayaran SPP
                   </form>
                </div>
             </div>
-            {{-- tutup --}}
-         </div>
+            
+         </div> --}}
          @endif
       </div>
    </div>
