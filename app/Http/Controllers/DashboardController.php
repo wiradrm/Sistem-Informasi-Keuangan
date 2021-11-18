@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $siswa = Siswa::isNotDeleted()->count();
         $kelas = Kelas::isNotDeleted()->count();
         $pengeluaran = DB::table("tb_pengeluaran")->get()->sum("jumlah");
-        $kas_masuk = DB::table("tb_pemasukan")->get()->sum("jumlah");
+        $kas_masuk = DB::table("tb_pemasukan")->where("jenis_transaksi", "!=", "Saldo Awal")->sum("jumlah");
 
         $saldo_awal = DB::table("tb_pemasukan")->where("jenis_transaksi", "Saldo Awal")->sum("jumlah");
         
