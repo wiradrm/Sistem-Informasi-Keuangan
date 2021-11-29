@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/jurnal', 'JurnalController@index')->name('jurnal');
     Route::get('/modal', 'ModalController@index')->name('modal');
 
+    Route::get('/laporan_spp', 'LaporanSPPController@index')->name('laporan_spp');
 
 
     Route::get('/bayar', 'BayarController@index')->name('bayar');
@@ -90,6 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/spp/delete/{spp_id}', 'SppController@destroy')->name('spp.delete');
 
         Route::post('/bayar/update/{id}', 'BayarController@update')->name('bayar.update');
+        Route::post('/bayar/edit/{id}', 'BayarController@edit')->name('bayar.edit');
         Route::post('/bayar/import', 'BayarController@import')->name('bayar.import');
 
         // Route::get('/jurnal/export', 'JurnalController@export')->name('jurnal.export');

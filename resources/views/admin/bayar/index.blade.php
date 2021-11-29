@@ -16,6 +16,7 @@ Data Pembayaran SPP
                <input type="text" class="form-control" id="search" placeholder="Cari Data Nama" name="nama">
             </div>
          </form>
+         
          @if(Auth::user()->akses_id == 2)
          {{-- <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary mx-3">Tambah Data</button> --}}
          {{-- <button type="submit" data-target="#importModal" data-toggle="modal" class="btn btn-success"><i class='bx bxs-file-import' ></i> Import Excel</button>
@@ -50,20 +51,35 @@ Data Pembayaran SPP
          @endif
       </div>
    </div>
-   <div class="col-md-6">
-      <div class="d-flex justify-content-end">
-         {{-- <a href="{{route('bayar.export')}}" class="btn btn-info "><i class='bx bxs-printer' ></i> Cetak Laporan</a> --}}
-         {{-- <div class="dropdown">
-            <a class="btn btn-outline-secondary dropdown-toggle btn-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <i class='bx bx-filter' ></i>
-               Filter
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" href="{{route('bayar')}}">Default</a>
-            </div>
-         </div> --}}
+</div>
+<div class="row mb-3">
+   <div class="col-md-3">
+      <label>Bulan</label>
+      <div class="dropdown">
+         <a class="form-control dropdown-toggle select-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Bulan
+         </a>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{route('bayar')}}">Default</a>
+            <a class="dropdown-item" href="?bulan=Oktober">Oktober</a>
+            <a class="dropdown-item" href="?bulan=November">November</a>
+            <a class="dropdown-item" href="?bulan=Desember">Desember</a>
+         </div>
       </div>
    </div>
+   {{-- <div class="col-md-3">
+      <label>Status</label>
+      <div class="dropdown">
+         <a class="form-control dropdown-toggle select-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Status
+         </a>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{route('bayar')}}">Default</a>
+            <a class="dropdown-item" href="?status=0">Belum Bayar</a>
+            <a class="dropdown-item" href="?status=1">Sudah Bayar</a>
+         </div>
+      </div>
+   </div> --}}
 </div>
 <!-- Content Row -->
 <div class="card shadow mb-4">
@@ -127,38 +143,65 @@ Data Pembayaran SPP
                   
                   @if ($item->status_transaksi == 0)
                       <td> <span class="badge-point bg-warning">Belum Bayar</span></td>
+                      <td class="text-center">
+                        <a class="btn btn-danger" href="" data-toggle="modal" data-target="#updateModal-{{$item->id}}">Bayar</a>
+                        <div class="modal fade" id="updateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Bayar SPP</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    </button>
+                                 </div>
+                                 <div class="modal-body">"{{$item->getSiswa->nama_siswa}}" melakukan pembayaran SPP pada bulan {{$item->bulan}}, sudah benar?</div>
+                                 <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <form action="{{route('bayar.update',$item->id)}}" method="POST">
+                                       @csrf
+                                       @method('POST')
+                                       <button type="submit" class="btn btn-primary">
+                                          Bayar
+                                       </button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </td>
                   @else
-                       <td colspan="2"> <span class="badge-point bg-success">Sudah Bayar</span></td> 
+                       <td> <span class="badge-point bg-success">Sudah Bayar</span></td>
+                       <td class="text-center">
+                        <a class="btn btn-warning" href="" data-toggle="modal" data-target="#updateModal-{{$item->id}}">Edit</a>
+                        <div class="modal fade" id="updateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Pembayaran</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    </button>
+                                 </div>
+                                 <div class="modal-body">"Mengedit data pembayaran SPP {{$item->getSiswa->nama_siswa}} pada bulan {{$item->bulan}} menjadi belum bayar", yakin?</div>
+                                 <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <form action="{{route('bayar.edit',$item->id)}}" method="POST">
+                                       @csrf
+                                       @method('POST')
+                                       <button type="submit" class="btn btn-primary">
+                                          Edit
+                                       </button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </td> 
                   @endif
                   
                   
                   @if($item->status_transaksi != 1)
-                  <td class="text-center">
-                     <a class="btn btn-danger" href="" data-toggle="modal" data-target="#updateModal-{{$item->id}}">Bayar</a>
-                     <div class="modal fade" id="updateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 class="modal-title" id="exampleModalLabel">Bayar SPP</h5>
-                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">×</span>
-                                 </button>
-                              </div>
-                              <div class="modal-body">"{{$item->getSiswa->nama_siswa}}" melakukan pembayaran SPP, sudah benar?</div>
-                              <div class="modal-footer">
-                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                 <form action="{{route('bayar.update',$item->id)}}" method="POST">
-                                    @csrf
-                                    @method('POST')
-                                    <button type="submit" class="btn btn-primary">
-                                       Bayar
-                                    </button>
-                                 </form>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </td>
+                  
                   @endif
                </tr>
                @endforeach

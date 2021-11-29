@@ -28,12 +28,21 @@ class BayarController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name');
+        $filter_status = $request->get('status');
+        $filter_bulan = $request->get('bulan');
 
         $models = Bayar::isNotDeleted();
 
         if ($name) {
             $models = $models->where('nama_siswa', 'like', '%' . $name . '%');
         }
+        if ($filter_status) {
+            $models = $models->where('status_transaksi', 'like', '%' . $filter_status . '%');
+        }
+        if ($filter_bulan) {
+            $models = $models->where('bulan', 'like', '%' . $filter_bulan . '%');
+        }
+
 
         $models = $models->paginate(20);
 
@@ -58,7 +67,18 @@ class BayarController extends Controller
               ->update(['status_transaksi' => 1]);
         
 
-        return redirect()->route('bayar')->with('info', 'Berhasil bayar data');
+        return redirect()->route('bayar')->with('info', 'Berhasil bayar SPP');
+    }
+
+    public function edit($id)
+    {
+        $model = Bayar::findOrFail($id);
+        DB::table('tb_bayar')
+              ->where('id', $id)
+              ->update(['status_transaksi' => 0]);
+        
+
+        return redirect()->route('bayar')->with('info', 'Berhasil edit data bayar');
     }
 
     public function import(Request $request) 

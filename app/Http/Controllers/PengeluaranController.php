@@ -41,6 +41,10 @@ class PengeluaranController extends Controller
         $orderdesc = $request->get('orderdesc');
         $models = Pengeluaran::isNotDeleted();
 
+        if ($jenis_transaksi) {
+            $models = $models->where('jenis_transaksi', 'like', '%' . $jenis_transaksi . '%');
+        }
+
 
         $models = $models->paginate(20);
         return view($this->index, compact('models'));

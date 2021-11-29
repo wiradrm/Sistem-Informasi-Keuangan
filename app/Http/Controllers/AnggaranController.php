@@ -39,10 +39,14 @@ class AnggaranController extends Controller
      */
     public function index(Request $request)
     {
-        $jenis_anggaran = $request->get('jenis_anggaran');
+        $anggaran = $request->get('anggaran');
         $orderasc = $request->get('orderasc');
         $orderdesc = $request->get('orderdesc');
         $models = Anggaran::isNotDeleted();
+
+        if ($anggaran) {
+            $models = $models->where('anggaran', 'like', '%' . $anggaran . '%');
+        }
 
 
         $models = $models->paginate(20);

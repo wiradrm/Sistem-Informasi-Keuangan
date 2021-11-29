@@ -41,6 +41,10 @@ class MasukController extends Controller
         $orderdesc = $request->get('orderdesc');
         $models = Pemasukan::isNotDeleted();
 
+        if ($jenis_transaksi) {
+            $models = $models->where('jenis_transaksi', 'like', '%' . $jenis_transaksi . '%');
+        }
+
 
         $models = $models->paginate(20);
         return view($this->index, compact('models'));

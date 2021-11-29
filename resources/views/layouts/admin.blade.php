@@ -1,6 +1,8 @@
 @php($editakses = App\Akses::isNotDeleted()->get())
 @php($profile = App\User::isNotDeleted()->where('id', Auth::user()->id)->first())
 <!DOCTYPE html>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+
 <html lang="en">
    <head>
       <meta charset="utf-8">
@@ -87,6 +89,7 @@
                      <h6 class="collapse-header">Laporan:</h6>
                      <a class="collapse-item" href="{{route('jurnal')}}">Jurnal Umum</a>
                      <a class="collapse-item" href="{{route('modal')}}">Perubahan Modal</a>
+                     <a class="collapse-item" href="{{route('laporan_spp')}}">Data SPP</a>
                   </div>
                </div>
             </li>
@@ -109,6 +112,7 @@
                      <h6 class="collapse-header">Laporan:</h6>
                      <a class="collapse-item" href="{{route('jurnal')}}">Jurnal Umum</a>
                      <a class="collapse-item" href="{{route('modal')}}">Perubahan Modal</a>
+                     <a class="collapse-item" href="{{route('laporan_spp')}}">Data SPP</a>
                   </div>
                </div>
             </li>

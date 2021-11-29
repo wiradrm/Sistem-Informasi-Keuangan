@@ -12,6 +12,8 @@ class Pengeluaran extends Model
 
     protected $table = 'tb_pengeluaran';
     protected $guarded = [];
+    protected $primaryKey = 'id_transaksi';
+
 
     public function scopeIsNotDeleted($query)
     {

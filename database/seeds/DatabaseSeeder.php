@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AksesSeeder::class,
             KelasSeeder::class,
-            SppSeeder::class,
+            // SppSeeder::class,
         ]);
     }
 }

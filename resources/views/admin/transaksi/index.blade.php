@@ -37,6 +37,7 @@ Transaksi
             <thead>
                <tr>
                   <th>Tanggal</th>
+                  <th>Transaksi</th>
                   <th>Keterangan</th>
                   <th>Jumlah</th>
                </tr>
@@ -46,6 +47,7 @@ Transaksi
                <tr>
                   <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
                   <td>{{$item->jenis_transaksi}}</td>
+                  <td>Kas Masuk <span class="iconify" data-icon="bx:bxs-down-arrow" style="color: #007267;"></span></td>
                   <td>@currency(($item->jumlah))</td>
                </tr>
                @endforeach
@@ -53,6 +55,7 @@ Transaksi
                <tr>
                   <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
                   <td>{{$item->jenis_transaksi}}</td>
+                  <td>Kas Keluar <span class="iconify" data-icon="bx:bxs-up-arrow" style="color: #d60e18;"></span></td>
                   <td>@currency(($item->jumlah))</td>
                </tr>
                @endforeach
@@ -60,6 +63,7 @@ Transaksi
                <tr>
                   <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
                   <td>SPP</td>
+                  <td>Kas Masuk <span class="iconify" data-icon="bx:bxs-down-arrow" style="color: #007267;"></span></td>
                   <td>@currency(($item->jumlah))</td>
                </tr>
                @endforeach

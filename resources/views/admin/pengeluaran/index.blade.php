@@ -158,7 +158,7 @@ Data Pengeluaran
                               @csrf
                               @method('PUT')
                               <div class="modal-body">
-                                 <input hidden type="text" class="form-control" id="id" name="id_transaksi" value="{{$item->id_transaksi}}">
+                                 <input hidden type="text" class="form-control" id="id_transaksi" name="id_transaksi" value="{{$item->id_transaksi}}">
                                  <div class="form-group">
                                     <label for="jenis_transaksi" class="col-form-label">Jenis Pengeluaran</label>
                                     <input type="text" class="form-control" id="jenis_transaksi" name="jenis_transaksi" value="{{$item->jenis_transaksi}}">

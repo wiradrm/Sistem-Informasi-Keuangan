@@ -43,6 +43,10 @@ class KelasController extends Controller
         $orderdesc = $request->get('orderdesc');
         $models = Kelas::isNotDeleted();
 
+        if ($kelas) {
+            $models = $models->where('kelas', 'like', '%' . $kelas . '%');
+        }
+
 
         $models = $models->paginate(20);
         return view($this->index, compact('models'));

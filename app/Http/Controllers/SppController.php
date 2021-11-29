@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\SPP;
+use App\Bayar;
+use App\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -68,13 +70,49 @@ class SPPController extends Controller
         // if ($this->validator->fails()) {
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
+        
+        $cek = $request->angkatan;
+        $siswa = \App\Siswa::where('angkatan', $cek)->get();
+        foreach ($siswa as $key => $item) {
 
+        if ($cek == $item->angkatan) {
+            $bayar = new Bayar();
+            $bayar->nisn = $item->nisn;
+            $bayar->kode_spp = $request->kode_spp;
+            $bayar->bulan = 'Oktober';
+            $bayar->jumlah = $request->jumlah_bayar;
+            $bayar->status_transaksi = 0;
+            $bayar->save();
+        }
+        if ($cek == $item->angkatan) {
+            $bayar = new Bayar();
+            $bayar->nisn = $item->nisn;
+            $bayar->kode_spp = $request->kode_spp;
+            $bayar->bulan = 'November';
+            $bayar->jumlah = $request->jumlah_bayar;
+            $bayar->status_transaksi = 0;
+            $bayar->save();
+        }
+        if ($cek == $item->angkatan) {
+            $bayar = new Bayar();
+            $bayar->nisn = $item->nisn;
+            $bayar->kode_spp = $request->kode_spp;
+            $bayar->bulan = 'Desember';
+            $bayar->jumlah = $request->jumlah_bayar;
+            $bayar->status_transaksi = 0;
+            $bayar->save();
+            }
+        }
+        
         $model = new SPP();
         $model->kode_spp = $request->kode_spp;
         $model->angkatan = $request->angkatan;
-        $model->bulan = $request->bulan;
-        $model->jumlah = $request->jumlah;
+        $model->jumlah_bayar = $request->jumlah_bayar;
         $model->save();
+
+
+        
+
         return redirect()->route('spp')->with('info', 'Berhasil menambah data');
     }
 

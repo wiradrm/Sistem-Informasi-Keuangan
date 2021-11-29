@@ -12,6 +12,8 @@ class Spp extends Model
 
     protected $table = 'tb_spp';
     protected $guarded = [];
+    protected $primaryKey = 'spp_id';
+
 
     public function scopeIsNotDeleted($query)
     {

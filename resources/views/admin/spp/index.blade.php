@@ -13,7 +13,7 @@ Data SPP
          <form class="form-inline">
             <div class="form-group">
                <label for="search" class="sr-only">Search</label>
-               <input type="text" class="form-control" id="search" placeholder="Cari Data SPP" name="kelas">
+               <input type="text" class="form-control" id="search" placeholder="Cari Data SPP" name="spp">
             </div>
          </form>
          @if(Auth::user()->akses_id == 2)
@@ -28,7 +28,7 @@ Data SPP
                      <span aria-hidden="true">&times;</span>
                   </button>
                   </div>
-                  <form action="{{route('kelas.import')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{route('spp.import')}}" method="POST" enctype="multipart/form-data">
                   @csrf
                   <div class="modal-body">
                      <div class="input-group mb-3">
@@ -51,14 +51,14 @@ Data SPP
    </div>
    <div class="col-md-6">
       <div class="d-flex justify-content-end">
-         {{-- <a href="{{route('kelas.export')}}" class="btn btn-info "><i class='bx bxs-printer' ></i> Cetak Laporan</a> --}}
+         {{-- <a href="{{route('spp.export')}}" class="btn btn-info "><i class='bx bxs-printer' ></i> Cetak Laporan</a> --}}
          {{-- <div class="dropdown">
             <a class="btn btn-outline-secondary dropdown-toggle btn-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                <i class='bx bx-filter' ></i>
                Filter
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-               <a class="dropdown-item" href="{{route('kelas')}}">Default</a>
+               <a class="dropdown-item" href="{{route('spp')}}">Default</a>
             </div>
          </div> --}}
       </div>
@@ -99,7 +99,6 @@ Data SPP
                <tr>
                   <th>Kode SPP</th>
                   <th>Angkatan</th>
-                  <th>Bulan</th>
                   <th>Jumlah</th>
                   @if(Auth::user()->akses_id == 2)
                   <th class="text-center">Action</th>
@@ -118,7 +117,6 @@ Data SPP
                <tr>
                   <td>{{$item->kode_spp}}</td>
                   <td>{{$item->angkatan}}</td>
-                  <td>{{$item->bulan}}</td>
                   <td>{{$item->jumlah_bayar}}</td>
                   @if(Auth::user()->akses_id == 2)
                   <td class="text-center">
@@ -136,7 +134,7 @@ Data SPP
                               <div class="modal-body">Apakah anda yakin menghapus data "{{$item->kode_spp}}"</div>
                               <div class="modal-footer">
                                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                 <form action="{{route('kelas.delete',$item->spp_id)}}" method="POST">
+                                 <form action="{{route('spp.delete',$item->spp_id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="btn btn-primary">
@@ -156,7 +154,7 @@ Data SPP
                                  <span aria-hidden="true">&times;</span>
                               </button>
                               </div>
-                              <form action="{{route('kelas.update', $item->spp_id)}}" method="POST">
+                              <form action="{{route('spp.update', $item->spp_id)}}" method="POST">
                               @csrf
                               @method('PUT')
                               <div class="modal-body">
@@ -167,29 +165,16 @@ Data SPP
                                   </div>
                                   <div class="form-group">
                                     <label for="angkatan" class="col-form-label">Angkatan</label>
-                                    <input type="text" class="form-control" id="angkatan" name="angkatan" value="{{$item->angkatan}}">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="bulan" class="col-form-label">Bulan</label>
-                                    <select name="bulan" id="bulan" class="form-control">
-
-                                      <option value="{{$item->bulan}}" selected hidden>{{$item->bulan}}</option>
-                                      <option value="Januari">Januari</option>
-                                    
-                                      <option value="Februari">Februari</option>
-                                      <option value="Maret">Maret</option>
-                                      <option value="April">April</option>
-                                      <option value="Mei">Mei</option>
-                                      <option value="Juni">Juni</option>
-                                      <option value="Juli">Juli</option>
-                                      <option value="Juli">Juli</option>
-                                      <option value="Agustus">Agustus</option>
-                                      <option value="September">September</option>
-                                      <option value="Oktober">Oktober</option>
-                                      <option value="November">November</option>
-                                      <option value="Desember">Desember</option>
-                          
-                                  </select>
+                                    <select name="angkatan" id="angkatan" class="form-control">
+                                       <option value="{{$item->angkatan}}" selected>{{$item->angkatan}}</option>
+                                      @php
+                                          for($i=0;$i<=8;$i++){
+                                            $year=date('Y',strtotime("last day of -$i year"));
+                                          
+                                            echo "<option name='$year'>$year</option>";
+                                          }
+                                      @endphp  
+                                    </select>
                                   </div>
                                   <div class="form-group">
                                     <label for="jumlah_bayar" class="col-form-label">Jumlah</label>

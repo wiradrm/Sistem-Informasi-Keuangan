@@ -16,30 +16,19 @@
         </div>
         <div class="form-group">
           <label for="angkatan" class="col-form-label">Angkatan</label>
-          <input type="text" class="form-control" id="angkatan" name="angkatan">
+          <select name="angkatan" id="angkatan" class="form-control">
+            @php
+                for($i=0;$i<=8;$i++){
+                  $year=date('Y',strtotime("last day of -$i year"));
+                
+                  echo "<option name='$year'>$year</option>";
+                }
+            @endphp  
+          </select>
         </div>
         <div class="form-group">
-          <label for="bulan" class="col-form-label">Bulan</label>
-          <select name="bulan" id="bulan" class="form-control">
-            <option value="Januari" selected>Januari</option>
-            <option value="Februari">Februari</option>
-            <option value="Maret">Maret</option>
-            <option value="April">April</option>
-            <option value="Mei">Mei</option>
-            <option value="Juni">Juni</option>
-            <option value="Juli">Juli</option>
-            <option value="Juli">Juli</option>
-            <option value="Agustus">Agustus</option>
-            <option value="September">September</option>
-            <option value="Oktober">Oktober</option>
-            <option value="November">November</option>
-            <option value="Desember">Desember</option>
-
-        </select>
-        </div>
-        <div class="form-group">
-          <label for="jumlah" class="col-form-label">Jumlah</label>
-          <input type="text" class="form-control" id="jumlah" name="jumlah">
+          <label for="jumlah_bayar" class="col-form-label">Jumlah</label>
+          <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar">
         </div>
       </div>
       <div class="modal-footer">
