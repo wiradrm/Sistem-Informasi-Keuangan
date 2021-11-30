@@ -13,7 +13,8 @@ Data Pembayaran SPP
          <form class="form-inline">
             <div class="form-group">
                <label for="search" class="sr-only">Search</label>
-               <input type="text" class="form-control" id="search" placeholder="Cari Data Nama" name="nama">
+               <input type='text' id='input' class="form-control" onkeyup='searchTable()' placeholder="Cari Data Nama" onkeypress="return event.keyCode != 13;">
+               {{-- <input type="text" class="form-control" id="search" placeholder="Cari Data Nama" name="nama"> --}}
             </div>
          </form>
          
@@ -211,6 +212,36 @@ Data Pembayaran SPP
       {{  $models->appends(\Request::query())->links() }}
    </div>
 </div>
+<script>
+   function searchTable() {
+       var input;
+       var saring;
+       var status; 
+       var tbody; 
+       var tr; 
+       var td;
+       var i; 
+       var j;
+       input = document.getElementById("input");
+       saring = input.value.toUpperCase();
+       tbody = document.getElementsByTagName("tbody")[0];;
+       tr = tbody.getElementsByTagName("tr");
+       for (i = 0; i < tr.length; i++) {
+           td = tr[i].getElementsByTagName("td");
+           for (j = 0; j < td.length; j++) {
+               if (td[j].innerHTML.toUpperCase().indexOf(saring) > -1) {
+                   status = true;
+               }
+           }
+           if (status) {
+               tr[i].style.display = "";
+               status = false;
+           } else {
+               tr[i].style.display = "none";
+           }
+       }
+   }
+   </script>
 @if(Auth::user()->akses_id == 2)
 @endif
 @endsection
