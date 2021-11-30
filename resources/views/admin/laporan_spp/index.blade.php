@@ -103,7 +103,7 @@ Laporan Modal
             <tbody>
                @foreach ($belum as $key => $item)
                    <tr>
-                     <td>{{$item->nama_siswa}}</td>
+                     <td>{{$item->nisn}}</td>
                       <td>{{$item->nama_siswa}}</td>
                      <td>{{$item->tunggakan}} Bulan</td>
                      <td>-@currency($item->jumlah_tunggakan)</td>
