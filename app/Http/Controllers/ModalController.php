@@ -41,9 +41,11 @@ class ModalController extends Controller
 
         
         if ($filter_tgl_input_from && $filter_tgl_input_to) {
-            $pemasukan = $pemasukan->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
-            $pengeluaran = $pengeluaran->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
-            $bayar = $bayar->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
+
+            $pemasukan = Pemasukan::isNotDeleted()->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+            $pengeluaran = Pengeluaran::isNotDeleted()->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+            $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+
         }
         
         $jum_keluar = $pengeluaran->sum("jumlah");

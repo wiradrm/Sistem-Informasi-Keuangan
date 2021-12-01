@@ -43,6 +43,10 @@ class SPPController extends Controller
         $orderdesc = $request->get('orderdesc');
         $models = SPP::isNotDeleted();
 
+        if ($spp) {
+            $models = $models->where('kode_spp', 'like', '%' . $spp . '%');
+        }
+
 
         $models = $models->paginate(20);
         return view($this->index, compact('models'));

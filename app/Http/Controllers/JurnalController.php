@@ -12,6 +12,7 @@ use App\Pemasukan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exports\JurnalExport;
+use DateTime;
 
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -29,6 +30,8 @@ class JurnalController extends Controller
     {
         $filter_tgl_input_from = $request->get('tgl_ps_from');
         $filter_tgl_input_to = $request->get('tgl_ps_to');
+        
+
 
 
         $data_pemasukan = Pemasukan::isNotDeleted()->get();
@@ -41,9 +44,11 @@ class JurnalController extends Controller
 
         
         if ($filter_tgl_input_from && $filter_tgl_input_to) {
-            $pemasukan = $pemasukan->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
-            $pengeluaran = $pengeluaran->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
-            $bayar = $bayar->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
+
+            $pemasukan = Pemasukan::isNotDeleted()->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+            $pengeluaran = Pengeluaran::isNotDeleted()->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+            $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+
         }
         
         $jum_keluar = $pengeluaran->sum("jumlah");
@@ -51,9 +56,6 @@ class JurnalController extends Controller
         $jum_spp = $bayar->sum("jumlah");
         
         $total = $jum_masuk+$jum_spp-$jum_keluar;
-        // $pemasukan = $pemasukan->paginate(200);
-        // $pengeluaran = $pengeluaran->paginate(200);
-        // $bayar = $bayar->paginate(200);
         
 
         return view($this->index, compact('pemasukan', 'pengeluaran', 'bayar','total'));
