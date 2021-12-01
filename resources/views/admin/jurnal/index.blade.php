@@ -156,6 +156,10 @@ Jurnal Umum
             </tbody>
          </table>
       </div>
+      {{-- {{ $pemasukan->appends(\Request::query())->links() }}
+      {{ $pengeluaran->appends(\Request::query())->links() }}
+      {{ $bayar->appends(\Request::query())->links() }} --}}
+
    </div>
 </div>
 

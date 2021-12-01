@@ -44,7 +44,7 @@ class BayarController extends Controller
         }
 
 
-        $models = $models->paginate(20);
+        $models = $models->paginate(1000);
 
         return view($this->index, compact('models'));
     }

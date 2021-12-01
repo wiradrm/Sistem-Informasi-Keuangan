@@ -27,23 +27,34 @@ class JurnalController extends Controller
      */
     public function index(Request $request)
     {
-        $filter_tgl_input_from = $request->get('tgl_input_from');
+        $filter_tgl_input_from = $request->get('tgl_ps_from');
+        $filter_tgl_input_to = $request->get('tgl_ps_to');
 
-        $pemasukan = Pemasukan::isNotDeleted()->get();
-        $pengeluaran = Pengeluaran::isNotDeleted()->get();
-        $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->get();
 
-        $jum_keluar = DB::table("tb_pengeluaran")->get()->sum("jumlah");
-        $jum_masuk = DB::table("tb_pemasukan")->get()->sum("jumlah");
-        $jum_spp = Bayar::isNotDeleted()->where("status_transaksi", 1)->get()->sum("jumlah");
+        $data_pemasukan = Pemasukan::isNotDeleted()->get();
+        $data_pengeluaran = Pengeluaran::isNotDeleted()->get();
+        $data_bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->get();
 
-        $total = $jum_masuk+$jum_spp-$jum_keluar;
+        $pemasukan = $data_pemasukan;
+        $pengeluaran = $data_pengeluaran;
+        $bayar = $data_bayar;
 
+        
         if ($filter_tgl_input_from && $filter_tgl_input_to) {
-            $pemasukan = $pemasukan->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to);
-            $pengeluaran = $pengeluaran->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to);
-            $bayar = $bayar->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to);
+            $pemasukan = $pemasukan->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
+            $pengeluaran = $pengeluaran->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
+            $bayar = $bayar->where('created_at', '>=', $filter_tgl_input_from,'&&','created_at', '<=', $filter_tgl_input_to);
         }
+        
+        $jum_keluar = $pengeluaran->sum("jumlah");
+        $jum_masuk = $pemasukan->sum("jumlah");
+        $jum_spp = $bayar->sum("jumlah");
+        
+        $total = $jum_masuk+$jum_spp-$jum_keluar;
+        // $pemasukan = $pemasukan->paginate(200);
+        // $pengeluaran = $pengeluaran->paginate(200);
+        // $bayar = $bayar->paginate(200);
+        
 
         return view($this->index, compact('pemasukan', 'pengeluaran', 'bayar','total'));
     }
