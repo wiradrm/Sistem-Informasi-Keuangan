@@ -159,6 +159,9 @@ Data SPP
                               @method('PUT')
                               <div class="modal-body">
                                  <input hidden type="text" class="form-control" id="spp_id" name="spp_id" value="{{$item->spp_id}}">
+                                 <input hidden type="text" class="form-control" id="cek_kode_spp" name="cek_kode_spp" value="{{$item->kode_spp}}">
+                                 <input hidden type="text" class="form-control" id="cek_angkatan" name="cek_angkatan" value="{{$item->angkatan}}">
+                                 <input hidden type="text" class="form-control" id="cek_harga" name="cek_harga" value="{{$item->jumlah_bayar}}">
                                  <div class="form-group">
                                     <label for="kode_spp" class="col-form-label">Kode SPP</label>
                                     <input type="kode_spp" class="form-control" id="kode_spp" name="kode_spp" value="{{$item->kode_spp}}">

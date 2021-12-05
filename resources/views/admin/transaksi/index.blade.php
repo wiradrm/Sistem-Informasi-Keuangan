@@ -9,10 +9,114 @@ Transaksi
 </div> 
 
 
+<div class="row mb-3">
+   <div class="col-md-3">
+      <label>Bulan</label>
+      <div class="dropdown">
+         <a class="form-control dropdown-toggle select-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Bulan
+         </a>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{route('transaksi')}}">Default</a>
+            <a class="dropdown-item" href="?bulan=10">Oktober</a>
+            <a class="dropdown-item" href="?bulan=11">November</a>
+            <a class="dropdown-item" href="?bulan=12">Desember</a>
+         </div>
+      </div>
+   </div>
+   {{-- <div class="col-md-3">
+      <label>Status</label>
+      <div class="dropdown">
+         <a class="form-control dropdown-toggle select-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Status
+         </a>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{route('bayar')}}">Default</a>
+            <a class="dropdown-item" href="?status=0">Belum Bayar</a>
+            <a class="dropdown-item" href="?status=1">Sudah Bayar</a>
+         </div>
+      </div>
+   </div> --}}
+</div>
+
+
 <!-- Content Row -->
 <div class="card shadow mb-4">
    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Data</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Kas Masuk <span class="iconify" data-icon="bx:bxs-down-arrow" style="color: #007267;"></span></h6>
+   </div>
+   <div class="card-body">
+      <div class="table-responsive">
+         @if (\Session::has('info'))
+         <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {!! \Session::get('info') !!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         @endif
+         @if ($errors->any())
+         <div class="alert alert-danger">
+            <ul class="my-0">
+               @foreach ($errors->all() as $error)
+               <li>{{ $error }}</li>
+               @endforeach
+            </ul>
+         </div>
+         @endif
+         <table class="table table-striped" width="100%" cellspacing="0">
+            <h5>SPP</h5>
+            <thead>
+               <tr>
+                  <th>Tanggal</th>
+                  <th>Oleh</th>
+                  <th>Jumlah</th>
+               </tr>
+            </thead>
+            <tbody>
+               @foreach($bayar as $key => $item)
+               <tr>
+                  <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
+                  <td>{{$item->getSiswa->nama_siswa}}</td>
+                  <td>@currency(($item->jumlah))</td>
+               </tr>
+               @endforeach
+               
+            </tbody>
+         </table>
+         <table class="table table-striped" width="100%" cellspacing="0">
+            <h5>Kas Masuk Lainnya</h5>
+            <thead>
+               <tr>
+                  <th>Tanggal</th>
+                  <th>Transaksi</th>
+                  <th>Jumlah</th>
+               </tr>
+            </thead>
+            <tbody>
+               @foreach($pemasukan as $key => $item)
+               <tr>
+                  <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
+                  <td>{{$item->jenis_transaksi}}</td>
+                  <td>@currency(($item->jumlah))</td>
+               </tr>
+               @endforeach
+               
+            </tbody>
+         </table>
+
+
+
+        
+      </div>
+   </div>
+</div>
+
+
+<!-- Content Row -->
+<div class="card shadow mb-4">
+   <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Kas Keluar <span class="iconify" data-icon="bx:bxs-up-arrow" style="color: #d60e18;"></span></h6>
    </div>
    <div class="card-body">
       <div class="table-responsive">
@@ -38,32 +142,14 @@ Transaksi
                <tr>
                   <th>Tanggal</th>
                   <th>Transaksi</th>
-                  <th>Keterangan</th>
                   <th>Jumlah</th>
                </tr>
             </thead>
             <tbody>
-               @foreach($pemasukan as $key => $item)
-               <tr>
-                  <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
-                  <td>{{$item->jenis_transaksi}}</td>
-                  <td>Kas Masuk <span class="iconify" data-icon="bx:bxs-down-arrow" style="color: #007267;"></span></td>
-                  <td>@currency(($item->jumlah))</td>
-               </tr>
-               @endforeach
                @foreach($pengeluaran as $key => $item)
                <tr>
                   <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
                   <td>{{$item->jenis_transaksi}}</td>
-                  <td>Kas Keluar <span class="iconify" data-icon="bx:bxs-up-arrow" style="color: #d60e18;"></span></td>
-                  <td>@currency(($item->jumlah))</td>
-               </tr>
-               @endforeach
-               @foreach($bayar as $key => $item)
-               <tr>
-                  <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
-                  <td>SPP</td>
-                  <td>Kas Masuk <span class="iconify" data-icon="bx:bxs-down-arrow" style="color: #007267;"></span></td>
                   <td>@currency(($item->jumlah))</td>
                </tr>
                @endforeach

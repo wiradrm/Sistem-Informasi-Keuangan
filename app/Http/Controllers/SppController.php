@@ -156,10 +156,126 @@ class SPPController extends Controller
         //     return redirect()->route($this->back)->withInput($request->all())->withErrors($this->validator->errors());
         // }
 
+        $cek_kode = $request->cek_kode_spp;
+        $cek_angkatan = $request->cek_angkatan;
+        $cek_bayar = $request->cek_harga;
+
+        $banding_kode = $request->kode_spp;
+        $banding_angkatan = $request->angkatan;
+        $banding_bayar = $request->jumlah_bayar;
+
+        
+        if ($cek_angkatan != $banding_angkatan && $cek_kode != $banding_kode) {
+            $siswa = \App\Siswa::where('angkatan', $cek_angkatan)->get();
+            //1
+            foreach ($siswa as $key => $item) {
+
+            DB::table('tb_bayar')->where('nisn', $item->nisn)->delete();
+
+            }
+
+            //2
+            $new = \App\Siswa::where('angkatan', $banding_angkatan)->get();
+            foreach ($new as $key => $item) {
+
+                // if ($cek == $item->angkatan) {
+                    $bayar = new Bayar();
+                    $bayar->nisn = $item->nisn;
+                    $bayar->kode_spp = $banding_kode;
+                    $bayar->bulan = 'Oktober';
+                    $bayar->jumlah = $banding_bayar;
+                    $bayar->status_transaksi = 0;
+                    $bayar->save();
+                // }
+                // if ($cek == $item->angkatan) {
+                    $bayar = new Bayar();
+                    $bayar->nisn = $item->nisn;
+                    $bayar->kode_spp = $banding_kode;
+                    $bayar->bulan = 'November';
+                    $bayar->jumlah = $banding_bayar;
+                    $bayar->status_transaksi = 0;
+                    $bayar->save();
+                // }
+                // if ($cek == $item->angkatan) {
+                    $bayar = new Bayar();
+                    $bayar->nisn = $item->nisn;
+                    $bayar->kode_spp = $banding_kode;
+                    $bayar->bulan = 'Desember';
+                    $bayar->jumlah = $banding_bayar;
+                    $bayar->status_transaksi = 0;
+                    $bayar->save();
+                    // }
+                }
+        }else if ($cek_angkatan != $banding_angkatan) {
+            $siswa = \App\Siswa::where('angkatan', $cek_angkatan)->get();
+            //1
+            foreach ($siswa as $key => $item) {
+
+            DB::table('tb_bayar')->where('nisn', $item->nisn)->delete();
+
+            }
+              //2
+              $new = \App\Siswa::where('angkatan', $banding_angkatan)->get();
+              foreach ($new as $key => $item) {
+  
+                //   if ($cek == $item->angkatan) {
+                      $bayar = new Bayar();
+                      $bayar->nisn = $item->nisn;
+                      $bayar->kode_spp = $banding_kode;
+                      $bayar->bulan = 'Oktober';
+                      $bayar->jumlah = $banding_bayar;
+                      $bayar->status_transaksi = 0;
+                      $bayar->save();
+                //   }
+                //   if ($cek == $item->angkatan) {
+                    $bayar = new Bayar();
+                
+                      $bayar->nisn = $item->nisn;
+                      $bayar->kode_spp = $banding_kode;
+                      $bayar->bulan = 'November';
+                      $bayar->jumlah = $banding_bayar;
+                      $bayar->status_transaksi = 0;
+                      $bayar->save();
+                //   }
+                //   if ($cek == $item->angkatan) {
+                    $bayar = new Bayar();
+                     
+                    $bayar->nisn = $item->nisn;
+                      $bayar->kode_spp = $banding_kode;
+                      $bayar->bulan = 'Desember';
+                      $bayar->jumlah = $banding_bayar;
+                      $bayar->status_transaksi = 0;
+                      $bayar->save();
+                    //   }
+                  }
+
+        }
+
+        if ($cek_kode != $banding_kode) {
+            $new = \App\Bayar::where('kode_spp', $cek_kode)->get();
+            foreach ($new as $key => $item) {
+                DB::table('tb_bayar')
+                    ->where('id', $item->id)
+                    ->update(['kode_spp' => $banding_kode]);
+            }
+        }
+
+
+        if ($cek_bayar != $banding_bayar) {
+            $new = \App\Bayar::where('kode_spp', $cek_kode)->get();
+            foreach ($new as $key => $item) {
+                DB::table('tb_bayar')
+                    ->where('id', $item->id)
+                    ->update(['jumlah' => $banding_bayar]);
+            }
+        }
+
         $model = SPP::findOrFail($spp_id);
-        $model->no_spp = $request->no_spp;
-        $model->spp = $request->spp;
-        $model->wali = $request->wali;
+        $model->kode_spp = $request->kode_spp;
+        $model->angkatan = $request->angkatan;
+        $model->jumlah_bayar = $request->jumlah_bayar;
+
+
         $model->save();
         return redirect()->route('spp')->with('info', 'Berhasil mengubah data');
     }
@@ -173,7 +289,13 @@ class SPPController extends Controller
     public function destroy($spp_id)
     {
       $model = SPP::findOrFail($spp_id);
+      $validasi = DB::table('tb_spp')
+                        ->where('spp_id',$spp_id)
+                        ->select('kode_spp');
+      
+
       DB::table('tb_spp')->where('spp_id',$spp_id)->delete();
+      DB::table('tb_bayar')->where('kode_spp',$validasi)->delete();
 
       return redirect()->route('spp')->with('info', 'Berhasil menghapus data');
     }

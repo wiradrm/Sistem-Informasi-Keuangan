@@ -28,6 +28,9 @@ class TransaksiController extends Controller
     public function index(Request $request)
     {
 
+        $filter_bulan = $request->get('bulan');
+
+
         $pemasukan = Pemasukan::isNotDeleted()->get();
         $pengeluaran = Pengeluaran::isNotDeleted()->get();
         $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->get();
@@ -37,6 +40,12 @@ class TransaksiController extends Controller
         $jum_spp = Bayar::isNotDeleted()->where("status_transaksi", 1)->get()->sum("jumlah");
 
         $total = $jum_keluar+$jum_masuk+$jum_spp;
+
+        if ($filter_bulan) {
+            $pemasukan = DB::table('tb_pemasukan')->whereMonth('created_at', $filter_bulan)->get();
+            $pengeluaran = DB::table('tb_pengeluaran')->whereMonth('created_at', $filter_bulan)->get();
+            $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->whereMonth('created_at', $filter_bulan)->get();
+        }
 
 
         return view($this->index, compact('pemasukan', 'pengeluaran', 'bayar'));
