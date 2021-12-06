@@ -289,9 +289,7 @@ class SPPController extends Controller
     public function destroy($spp_id)
     {
       $model = SPP::findOrFail($spp_id);
-      $validasi = DB::table('tb_spp')
-                        ->where('spp_id',$spp_id)
-                        ->select('kode_spp');
+      $validasi = SPP::where('spp_id',$spp_id)->value('kode_spp');
       
 
       DB::table('tb_spp')->where('spp_id',$spp_id)->delete();
