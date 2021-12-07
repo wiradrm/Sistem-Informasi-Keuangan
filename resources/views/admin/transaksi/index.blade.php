@@ -11,18 +11,18 @@ Transaksi
 
 <div class="row mb-3">
    <div class="col-md-3">
-      <label>Bulan</label>
-      <div class="dropdown">
-         <a class="form-control dropdown-toggle select-filter" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Bulan
-         </a>
-         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="{{route('transaksi')}}">Default</a>
-            <a class="dropdown-item" href="?bulan=10">Oktober</a>
-            <a class="dropdown-item" href="?bulan=11">November</a>
-            <a class="dropdown-item" href="?bulan=12">Desember</a>
+      <form id="form_filter_input_ps">
+         <div class="form-group">
+            <label for="filter_input_from">Transaksi Dari</label>
+            <input type="date" class="form-control mb-3" id="filter_input_ps_from" placeholder="Cari Data" name="tgl_ps_from">
          </div>
-      </div>
+   </div>
+   <div class="col-md-3">
+         <div class="form-group">
+            <label for="filter_input_from">Transaksi Sampai</label>
+            <input type="date" class="form-control" id="filter_input_ps_to" placeholder="Cari Data" name="tgl_ps_to">
+         </div>
+      </form>
    </div>
    {{-- <div class="col-md-3">
       <label>Status</label>
@@ -74,6 +74,13 @@ Transaksi
                </tr>
             </thead>
             <tbody>
+               @if($bayar->count() == 0)
+                  <tr>
+                     <td colspan="100%" align="center">
+                           No data
+                     </td>
+                  </tr>
+               @endif
                @foreach($bayar as $key => $item)
                <tr>
                   <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
@@ -94,6 +101,13 @@ Transaksi
                </tr>
             </thead>
             <tbody>
+               @if($pemasukan->count() == 0)
+                  <tr>
+                     <td colspan="100%" align="center">
+                           No data
+                     </td>
+                  </tr>
+               @endif
                @foreach($pemasukan as $key => $item)
                <tr>
                   <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>
@@ -146,6 +160,13 @@ Transaksi
                </tr>
             </thead>
             <tbody>
+               @if($pengeluaran->count() == 0)
+                  <tr>
+                     <td colspan="100%" align="center">
+                           No data
+                     </td>
+                  </tr>
+               @endif
                @foreach($pengeluaran as $key => $item)
                <tr>
                   <td> <strong>{{date('d/m/Y', strtotime($item->created_at))}}</strong></td>

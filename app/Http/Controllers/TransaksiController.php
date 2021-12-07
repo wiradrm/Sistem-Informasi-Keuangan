@@ -28,24 +28,30 @@ class TransaksiController extends Controller
     public function index(Request $request)
     {
 
-        $filter_bulan = $request->get('bulan');
+        $filter_tgl_input_from = $request->get('tgl_ps_from');
+        $filter_tgl_input_to = $request->get('tgl_ps_to');
 
 
-        $pemasukan = Pemasukan::isNotDeleted()->get();
-        $pengeluaran = Pengeluaran::isNotDeleted()->get();
-        $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->get();
+        $data_pemasukan = Pemasukan::isNotDeleted()->get();
+        $data_pengeluaran = Pengeluaran::isNotDeleted()->get();
+        $data_bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->get();
 
-        $jum_keluar = DB::table("tb_pengeluaran")->get()->sum("jumlah");
-        $jum_masuk = DB::table("tb_pemasukan")->get()->sum("jumlah");
-        $jum_spp = Bayar::isNotDeleted()->where("status_transaksi", 1)->get()->sum("jumlah");
+        $pemasukan = $data_pemasukan;
+        $pengeluaran = $data_pengeluaran;
+        $bayar = $data_bayar;
 
-        $total = $jum_keluar+$jum_masuk+$jum_spp;
+        
+        if ($filter_tgl_input_from && $filter_tgl_input_to) {
 
-        if ($filter_bulan) {
-            $pemasukan = DB::table('tb_pemasukan')->whereMonth('created_at', $filter_bulan)->get();
-            $pengeluaran = DB::table('tb_pengeluaran')->whereMonth('created_at', $filter_bulan)->get();
-            $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->whereMonth('created_at', $filter_bulan)->get();
+            $pemasukan = Pemasukan::isNotDeleted()->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+            $pengeluaran = Pengeluaran::isNotDeleted()->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+            $bayar = Bayar::isNotDeleted()->where("status_transaksi", 1)->whereDate('created_at', '>=', $filter_tgl_input_from)->whereDate('created_at', '<=', $filter_tgl_input_to)->get();
+
         }
+        
+        $jum_keluar = $pengeluaran->sum("jumlah");
+        $jum_masuk = $pemasukan->sum("jumlah");
+        $jum_spp = $bayar->sum("jumlah");
 
 
         return view($this->index, compact('pemasukan', 'pengeluaran', 'bayar'));
