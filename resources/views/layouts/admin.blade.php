@@ -88,7 +88,7 @@
                   <div class="bg-white py-2 collapse-inner rounded">
                      <h6 class="collapse-header">Laporan:</h6>
                      <a class="collapse-item" href="{{route('jurnal')}}">Jurnal Umum</a>
-                     <a class="collapse-item" href="{{route('modal')}}">Perubahan Modal</a>
+                     <a class="collapse-item" href="{{route('modal')}}">Laba / Rugi</a>
                      <a class="collapse-item" href="{{route('laporan_spp')}}">Data SPP</a>
                   </div>
                </div>
@@ -111,7 +111,7 @@
                   <div class="bg-white py-2 collapse-inner rounded">
                      <h6 class="collapse-header">Laporan:</h6>
                      <a class="collapse-item" href="{{route('jurnal')}}">Jurnal Umum</a>
-                     <a class="collapse-item" href="{{route('modal')}}">Perubahan Modal</a>
+                     <a class="collapse-item" href="{{route('modal')}}">Laba / Rugi</a>
                      <a class="collapse-item" href="{{route('laporan_spp')}}">Data SPP</a>
                   </div>
                </div>
