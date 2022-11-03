@@ -6,8 +6,8 @@ Sistem informasi Keuangan berbasis Web sebagai sarana pengumpulan, pengolahan da
 
 ```bash
 git init
-git clone https://github.com/wiradrm/pembayaran-spp.git
-cd pembayaran-spp
+git clone https://github.com/wiradrm/Sistem-Informasi-Keuangan.git
+cd Sistem Informasi Keuangan
 ```
 
 ## Installation
